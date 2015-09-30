@@ -1,0 +1,28 @@
+{
+  "name": "Syx",
+  "version": "0.1.0",
+  "description": "Syx is a blogging platform for technical learning.",
+  "main": "server/start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apurv/syx.git"
+  },
+  "keywords": [
+    "blog",
+    "blogging",
+    "learning",
+    "technical",
+    "programming",
+    "tutorials",
+    "guides"
+  ],
+  "author": "Apurv, Angie, Sam, Tom",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/apurv/syx/issues"
+  },
+  "homepage": "https://syx.io"
+}
