@@ -36,6 +36,17 @@ module.exports = function(app, passport) {
       failureRedirect: '/login'
     }));
 
+  // GitHub auth
+  app.get('/auth/github', passport.authenticate('github'));
+
+  app.get('/auth/github/callback', 
+    passport.authenticate('github', { failureRedirect: '/login' }),
+    function(req, res) {
+      console.log('hit successful github login')
+      // Successful authentication, redirect home.
+      res.redirect('/');
+    });
+
   // topic routes
   app.get('/topic', topics.all);
 

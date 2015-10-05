@@ -57,9 +57,9 @@ export default class Login extends React.Component {
                 <button className={styles.login__button + ' ' + styles['login__button--green']} onClick={this._onLoginSubmit}>Login</button>
                 <p className={styles.login__hint}>Hint: email: example@ninja.com password: ninja</p>
             </fieldset>
-            <h1 className={styles.login__header}>Google Login Demo</h1>
+            <h1 className={styles.login__header}>GitHub Login</h1>
             <fieldset className={styles.login__fieldset}>
-              <a className={styles.login__button + ' ' + styles['login__button--green']} href="/auth/google">Login with Google</a>
+              <a className={styles.login__button + ' ' + styles['login__button--green']} href="/auth/github">Login with GitHub</a>
             </fieldset>
           </div>
         );
