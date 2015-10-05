@@ -41,20 +41,25 @@ app.listen(app.get('port'));
 
 
 // PATCH - hides unnecessary warnings by React for non-prod environments
-var warn = console.warn;
-var warningFilterKey = function(warning) {
-    return warning.indexOf("Warning: owner-based and parent-based contexts differ") >= 0
-};
-var throttledWarn = _.throttle(function() {
-    warn.call(console,"Throttled warning about React owner/parent based contexts, see https://github.com/facebook/react/issues/4081 for reasons");
-    warn.apply(console, arguments);
-}, 60000);
 
-console.warn = function() {
-    if ( arguments && arguments.length > 0 && typeof arguments[0] === "string" && warningFilterKey(arguments[0]) ) {
-        throttledWarn.apply(throttledWarn,arguments);
-    }
-    else {
-        warn.apply(console, arguments);
-    }
-};
+var node_env = process.env.NODE_ENV;
+
+if(node_env === 'development') {
+  var warn = console.warn;
+  var warningFilterKey = function(warning) {
+      return warning.indexOf("Warning: owner-based and parent-based contexts differ") >= 0
+  };
+  var throttledWarn = _.throttle(function() {
+      warn.call(console,"Throttled warning about React owner/parent based contexts, see https://github.com/facebook/react/issues/4081 for reasons");
+      warn.apply(console, arguments);
+  }, 60000);
+
+  console.warn = function() {
+      if ( arguments && arguments.length > 0 && typeof arguments[0] === "string" && warningFilterKey(arguments[0]) ) {
+          throttledWarn.apply(throttledWarn,arguments);
+      }
+      else {
+          warn.apply(console, arguments);
+      }
+  };
+}

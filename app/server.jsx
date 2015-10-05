@@ -33,7 +33,7 @@ const renderToMarkup = (alt, state, req, res) => {
   return markup;
 };
 
-/* 
+/*
  * Export render function to be used in server/config/routes.js
  * We grab the state passed in from the server and the req object from Express/Koa
  * and pass it into the Router.run function.
