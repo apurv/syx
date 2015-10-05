@@ -1,5 +1,5 @@
 /**
- * Schema Definitions
+ * Defining a Article Model in mongoose
  *
  */
 var mongoose = require('mongoose');

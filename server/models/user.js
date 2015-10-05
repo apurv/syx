@@ -1,6 +1,5 @@
 /**
  * Defining a User Model in mongoose
- * Code modified from https://github.com/sahat/hackathon-starter
  */
 
 var bcrypt = require('bcrypt-nodejs');
