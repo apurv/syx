@@ -4,7 +4,7 @@
  */
 var mongoose = require('mongoose');
 
-var PostSchema = new mongoose.Schema({
+var ArticleSchema = new mongoose.Schema({
   title: String,
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   postDate: { type: Date, index: true, default: Date.now },
@@ -17,5 +17,5 @@ var PostSchema = new mongoose.Schema({
 });
 
 // Compiles the schema into a model, opening (or creating, if
-//	nonexistent) the 'Post' collection in the MongoDB database
-Topic = mongoose.model('Post', PostSchema);
+//	nonexistent) the 'Article' collection in the MongoDB database
+Topic = mongoose.model('Article', ArticleSchema);

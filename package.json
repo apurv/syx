@@ -1,11 +1,11 @@
 {
-  "name": "react-webpack-node",
-  "version": "1.2.0",
-  "description": "A simple Node.js app using Express 4 with Webpack, React, alt, ImmutableJS",
-  "repository": "https://github.com/choonkending/react-webpack-node",
+  "name": "syx",
+  "version": "0.1.0",
+  "description": "Syx is a blogging platform for technical learning.",
+  "repository": "https://github.com/apurv/syx",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node server/index.js",
+    "start": "npm run buildHotLoader && NODE_ENV=devhotloader node server/index.js",
     "dev": "NODE_ENV=development node server/index.js",
     "devHotLoader": "npm run buildHotLoader && NODE_ENV=devhotloader node server/index.js",
     "build": "webpack --progress --colors --config ./webpack/webpack.config.js",
@@ -15,8 +15,21 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "webpack -p --config ./webpack/webpack.config.js"
   },
-  "author": "Choon Ken Ding",
-  "license": "MIT",
+  "author": "Apurv Parikh, Angie Yang, Samuel Leavin, Thomas Proenza",
+  "keywords": [
+    "blog",
+    "blogging",
+    "learning",
+    "technical",
+    "programming",
+    "tutorials",
+    "guides"
+  ],
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/apurv/syx/issues"
+  },
+  "homepage": "https://syx.io",
   "devDependencies": {
     "react-hot-loader": "^1.2.8",
     "webpack-dev-server": "^1.10.1"

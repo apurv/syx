@@ -1,7 +1,7 @@
 {
-  "name": "React Node Express Mongo",
-  "description": "A barebones Node.js app using Express 4 with MongoDB, and ReactJS in Flux, using Webpack as a module bundler",
-  "repository": "https://github.com/choonkending/react-webpack-node",
+  "name": "syx",
+  "description": "Syx is a blogging platform for technical learning.",
+  "repository": "https://github.com/apurv/syx",
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["node", "express", "static", "react", "webpack", "mongodb"],
   "addons" : [
