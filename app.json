@@ -1,0 +1,10 @@
+{
+  "name": "syx",
+  "description": "Syx is a blogging platform for technical learning.",
+  "repository": "https://github.com/apurv/syx",
+  "logo": "https://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static", "react", "webpack", "mongodb"],
+  "addons" : [
+  	"mongohq"
+  ]
+}
