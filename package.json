@@ -5,7 +5,7 @@
   "repository": "https://github.com/apurv/syx",
   "main": "index.js",
   "scripts": {
-    "start": "npm run buildHotLoader && NODE_ENV=devhotloader node server/index.js",
+    "start": "npm run buildHotLoader && NODE_ENV=development node server/index.js",
     "dev": "NODE_ENV=development node server/index.js",
     "devHotLoader": "npm run buildHotLoader && NODE_ENV=devhotloader node server/index.js",
     "build": "webpack --progress --colors --config ./webpack/webpack.config.js",

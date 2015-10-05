@@ -84,11 +84,11 @@ module.exports = function (app, passport) {
   app.use(passport.session());
 
   app.use(flash());
-  
+
   var port = (node_env === 'production') ? app.get('port') : 3000;
 
   // We only run this workflow when not in Production && require a hot-loader
-  if(node_env === 'devhotloader') {
+  if(node_env === 'development') {
     // We require the bundle inside the if block because
     // it is only needed in a development environment.
     var devServer = require('../dev-server');
