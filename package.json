@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "bootstrap": "^3.3.5",
     "exports-loader": "^0.6.2",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
