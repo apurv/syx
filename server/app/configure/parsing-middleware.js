@@ -1,8 +1,8 @@
 'use strict';
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
 
-module.exports = function (app) {
+module.exports = (app) => {
 
     // Important to have this before any session middleware
     // because what is a session without a cookie?

@@ -1,17 +1,16 @@
 'use strict';
 
-var crypto = require('crypto');
-var mongoose = require('mongoose');
+let crypto = require('crypto');
+let mongoose = require('mongoose');
 
-var schema = new mongoose.Schema({
+let schema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: String,
-  role: [String],
+  role: String, // admin, user, anon
   salt: { type: String },
   createdAt: { type: Date, index: true, default: Date.now },
   profile: {
     name: { type: String, default: '' },
-    gender: { type: String, default: '' },
     location: { type: String, default: '' },
     website: { type: String, default: '' },
     picture: { type: String, default: '' }
@@ -22,12 +21,12 @@ var schema = new mongoose.Schema({
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
-var generateSalt = function () {
+let generateSalt = function () {
     return crypto.randomBytes(16).toString('base64');
 };
 
-var encryptPassword = function (plainText, salt) {
-    var hash = crypto.createHash('sha1');
+let encryptPassword = function (plainText, salt) {
+    let hash = crypto.createHash('sha1');
     hash.update(plainText);
     hash.update(salt);
     return hash.digest('hex');
