@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Navbar from "./Navbar.jsx";
 import Splash from "./Splash.jsx";
 import Card from "./Card.jsx";
+import ArticleStore from "../stores/article.store"
 require('bootstrap/dist/css/bootstrap.min.css');
 
 export default class App extends Component {
