@@ -1,13 +1,8 @@
-import nodeLibsBrowser from 'node-libs-browser'
+var EventEmitter = require('events').EventEmitter
 
-// import merge from 'react/lib/merge'
-let EventEmitter = nodeLibsBrowser[events].EventEmitter;
+let ArticleStore = Object.assign({}, EventEmitter.prototype, {
 
-// let ArticleStore = merge(EventEmitter.prototype, {
-
-// 	emitChange() {
-// 		this.emit('TEST');
-// 	}
-// })
-
-console.log('hello from article store');
+	emitChange() {
+		this.emit('TEST');
+	}
+});
