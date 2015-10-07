@@ -20,15 +20,14 @@ var logListenEvents = function (err, result) {
 		console.log(err);
 	}
 
-	console.log(chalk.blue('Server started on port', chalk.magenta(8080)));
-	// console.log("Listening at localhost:8080");
+	console.log(chalk.blue('Server started on port', chalk.green(3000)));
 	/* eslint-enable no-console */
 }
 
 
 var startServer = function () {
 
-    var PORT = process.env.PORT || 8080;
+    var PORT = process.env.PORT || 3000;
 
     server.listen(PORT, 'localhost', logListenEvents);
 
