@@ -10,7 +10,7 @@ var schema = new mongoose.Schema({
   tags: [String],
   share: {},
   comments: [{}],
-  rev: [{}],
+  revision: [{}],
   media: {}
 });
 
