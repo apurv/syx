@@ -13,4 +13,4 @@
 */
 
 require('babel/register');
-require('./seedData');
+require('./index');
