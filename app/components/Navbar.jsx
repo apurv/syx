@@ -17,7 +17,7 @@ export default class Navbar extends Component {
 	        <div id="navbar" className="navbar-collapse collapse">
 	          <ul className="nav navbar-nav navbar-right">
 	            <li><a href="">Articles</a></li>
-	            <li><a href="">GitHub Login</a></li>
+	            <li><a href="/auth/github">GitHub Login</a></li>
 	          </ul>
 	        </div>
 	      </div>
