@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
-var join = require("path").join;
+let join = require("path").join;
 
-var webpack = require("webpack");
+let webpack = require("webpack");
 
-var buildOutputDir = join(__dirname, "static");
-var appEntryPoint = join(__dirname, "app", "main.js");
+let buildOutputDir = join(__dirname, "static");
+let appEntryPoint = join(__dirname, "app", "main.js");
 
 module.exports = {
 	entry: [

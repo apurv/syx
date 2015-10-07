@@ -1,8 +1,8 @@
 'use strict';
-var socketio = require('socket.io');
-var io = null;
+let socketio = require('socket.io');
+let io = null;
 
-module.exports = function (server) {
+module.exports = (server) => {
 
     if (io) return io;
 
@@ -11,7 +11,7 @@ module.exports = function (server) {
     io.on('connection', function () {
         // Now have access to socket, wowzers!
     });
-    
+
     return io;
 
 };
