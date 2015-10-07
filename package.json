@@ -5,7 +5,7 @@
   "repository": "https://github.com/apurv/syx",
   "scripts": {
     "build": "webpack --progress --colors",
-    "start": "node ./server/index.js",
+    "start": "node ./server/start.js",
     "test": "set BABEL_ENV=test; export BABEL_ENV=test; mocha --compilers js:babel/register app/**/*-test.js --recursive",
     "test:w": "chokidar '**/*.js' -i 'node_modules' -c 'npm run --silent test'",
     "test:d": "set BABEL_ENV=test; export BABEL_ENV=test; mocha --compilers js:babel/register app/**/*-test.js --recursive --debug-brk"
