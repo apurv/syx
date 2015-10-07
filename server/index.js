@@ -34,7 +34,7 @@ let startServer = () => {
 
 };
 
-startDb.then(createApplication).then(startServer).catch(() => {
+startDb.then(createApplication).then(startServer).catch((err) => {
     console.error(chalk.red(err.stack));
     process.kill(1);
 });
