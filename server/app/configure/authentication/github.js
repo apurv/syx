@@ -16,10 +16,10 @@ module.exports = function (app) {
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
+        console.log('hit verifyCallback', profile);
 
         UserModel.findOne({ 'github.id': profile.id }).exec()
             .then(function (user) {
-
                 if (user) {
                     return user;
                 } else {
@@ -41,7 +41,7 @@ module.exports = function (app) {
 
     passport.use(new GithubStrategy(githubCredentials, verifyCallback));
 
-    app.get('/auth/github', function(req,res){console.log('hi')},
+    app.get('/auth/github',
       passport.authenticate('github'));
 
     app.get('/auth/github/callback', 

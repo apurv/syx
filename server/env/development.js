@@ -19,6 +19,6 @@ module.exports = {
   "GITHUB": {
     "clientID": 'ffc693ca6b42004930a6',
     "clientSecret": '4f66dce359f32ab172bcf49972289ebfd0781f3e',
-    "callbackURL": "/auth/github/callback"
+    "callbackURL": "http://127.0.0.1:3000/auth/github/callback"
   }
 };
