@@ -1,19 +1,18 @@
 import AppConstants from '../constants';
 import AppDispatcher from '../dispatcher/dispatcher';
 import {Store} from 'flux/utils';
+import ArticleActions from '../actions/article.actions';
+
+console.log('inside ArticleStore; dispatcher: ', AppDispatcher);
 
 
-// let ArticleStore = new Store(Dispatcher);
-// // console.log('Store: ', Store);
+let dispatchToken = AppDispatcher.register(analyzeDispatch)
 
+function analyzeDispatch() {
+	let action = dispatchMsg.action;
+	console.log('hello from ArticleStore; received dispatchMsg: ', dispatchMsg);
+}
 
-// // var EventEmitter = require('events').EventEmitter;
+let ArticleStore = new Store();
 
-// // let ArticleStore = Object.assign({}, EventEmitter.prototype, {
-
-// // 	emitChange() {
-// // 		this.emit('TEST');
-// // 	}
-// // });
-
-// module.exports = ArticleStore;
+export default ArticleStore;
