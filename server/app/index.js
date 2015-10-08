@@ -1,22 +1,22 @@
 'use strict';
-var path = require('path');
-var express = require('express');
-var app = express();
+let path = require('path');
+let express = require('express');
+let app = express();
 
-var webpack = require("webpack");
-var webpackDevMiddleware = require("webpack-dev-middleware");
-var webpackHotMiddleware = require("webpack-hot-middleware");
+let webpack = require("webpack");
+let webpackDevMiddleware = require("webpack-dev-middleware");
+let webpackHotMiddleware = require("webpack-hot-middleware");
 
-var config = require("../../webpack.config");
+let config = require("../../webpack.config");
 
-var devMiddlewareOptions = {
+let devMiddlewareOptions = {
 	noInfo: true,
 	publicPath: config.output.publicPath
 };
 
-var compiler = webpack(config);
-var hmrMiddleware = webpackHotMiddleware(compiler);
-var devMiddleware = webpackDevMiddleware(compiler, devMiddlewareOptions);
+let compiler = webpack(config);
+let hmrMiddleware = webpackHotMiddleware(compiler);
+let devMiddleware = webpackDevMiddleware(compiler, devMiddlewareOptions);
 
 
 module.exports = app;
@@ -39,7 +39,7 @@ app.use('/api', require('./routes'));
  This allows for proper 404s instead of the wildcard '/*' catching
  URLs that bypass express.static because the given file does not exist.
  */
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
 
     if (path.extname(req.path).length > 0) {
         res.status(404).end();
@@ -49,12 +49,12 @@ app.use(function (req, res, next) {
 
 });
 
-app.get('/*', function (req, res) {
+app.get('/*', (req, res) => {
     res.sendFile(app.get('indexHTMLPath'));
 });
 
 // Error catching endware.
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
     console.error(err, typeof next);
     res.status(err.status || 500).send(err.message || 'Internal server error.');
 });
