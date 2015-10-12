@@ -39,6 +39,7 @@ let seedUsers = () => {
 
     let users = [
         {
+            username: 'test123',
             email: 'test@test.com',
             password: '123',
             role: 'admin',
@@ -47,6 +48,7 @@ let seedUsers = () => {
             },
         },
         {
+            username: 'qwe123',
             email: 'qwe@qwe.com',
             password: '123',
             role: 'admin',
@@ -55,6 +57,7 @@ let seedUsers = () => {
             },
         },
         {
+            username: 'asd123',
             email: 'asd@asd.com',
             password: '123',
             role: 'user',
@@ -63,6 +66,7 @@ let seedUsers = () => {
             },
         },
         {
+            username: 'zxc123',
             email: 'zxc@zxc.com',
             password: '123',
             role: 'user',
