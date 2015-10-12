@@ -1,15 +1,15 @@
 'use strict';
-var path = require('path');
-var chalk = require('chalk');
-var util = require('util');
+let path = require('path');
+let chalk = require('chalk');
+let util = require('util');
 
-var rootPath = path.join(__dirname, '../../../');
-var indexPath = path.join(rootPath, './server/app/views/index.html');
-var faviconPath = path.join(rootPath, './server/app/views/favicon.ico');
+let rootPath = path.join(__dirname, '../../../');
+let indexPath = path.join(rootPath, './server/app/views/index.html');
+let faviconPath = path.join(rootPath, './server/app/views/favicon.ico');
 
-var env = require(path.join(rootPath, './server/env'));
+let env = require(path.join(rootPath, './server/env'));
 
-var logMiddleware = function (req, res, next) {
+let logMiddleware = (req, res, next) => {
     util.log(('---NEW REQUEST---'));
     console.log(util.format(chalk.red('%s: %s %s'), 'REQUEST ', req.method, req.path));
     console.log(util.format(chalk.yellow('%s: %s'), 'QUERY   ', util.inspect(req.query)));
@@ -17,7 +17,7 @@ var logMiddleware = function (req, res, next) {
     next();
 };
 
-module.exports = function (app) {
+module.exports = (app) => {
     app.setValue('env', env);
     app.setValue('projectRoot', rootPath);
     app.setValue('indexHTMLPath', indexPath);
