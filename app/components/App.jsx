@@ -1,8 +1,12 @@
-import React, {Component} from "react";
-import Navbar from "./Navbar.jsx";
-import Splash from "./Splash.jsx";
-import Card from "./Card.jsx";
+import React, {Component} from 'react';
+import Navbar from './Navbar.jsx';
+import Splash from './Splash.jsx';
+import Card from './Card.jsx';
 require('bootstrap/dist/css/bootstrap.min.css');
+import { Router, Route, Link } from 'react-router';
+
+import articleStore from '../stores/article.store';
+import AppDispatcher from '../dispatcher/dispatcher';
 
 export default class App extends Component {
 	render() {
@@ -10,11 +14,13 @@ export default class App extends Component {
 			<div>
 		    <Navbar />
 				<Splash />
+
 				<div className="row">
 					<Card />
 					<Card />
 					<Card />
 				</div>
+				
 			</div>
 		)
 	}
