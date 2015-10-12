@@ -5,7 +5,8 @@ let crypto = require('crypto');
 let mongoose = require('mongoose');
 
 let schema = new mongoose.Schema({
-  email: { type: String, unique: true, required: true },
+  username: { type: String, unique: true, required: true },
+  email: { type: String, unique: true },
   password: String,
   role: String, // admin, user, anon
   salt: { type: String },
@@ -16,8 +17,7 @@ let schema = new mongoose.Schema({
     website: { type: String, default: '' },
     picture: { type: String, default: '' }
   },
-  github: { id: String },
-  google: { id: String }
+  github: { id: String }
 });
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations

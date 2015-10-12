@@ -12,7 +12,7 @@ let server = require('http').createServer();
 let createApplication = () => {
     let app = require('./app');
     server.on('request', app); // Attach the Express application.
-    require('./io')(server);   // Attach socket.io.
+    // require('./io')(server);   // Attach socket.io.
 };
 
 let logListenEvents = (err, result) => {

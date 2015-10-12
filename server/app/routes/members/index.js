@@ -11,7 +11,7 @@ let ensureAuthenticated = (req, res, next) => {
     }
 };
 
-router.get('/secret-stash', ensureAuthenticated, function (req, res) {
+router.get('/secret-stash', ensureAuthenticated, (req, res) => {
 
     let theStash = [
         'http://ep.yimg.com/ay/candy-crate/bulk-candy-store-2.gif',
