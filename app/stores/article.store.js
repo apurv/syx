@@ -1,18 +1,35 @@
 import AppConstants from '../constants';
 import AppDispatcher from '../dispatcher/dispatcher';
-import {Store} from 'flux/utils';
+import { Store } from 'flux/utils';
 import ArticleActions from '../actions/article.actions';
 
-console.log('inside ArticleStore; dispatcher: ', AppDispatcher);
+let articles = {};
 
+class ArticleStore extends Store {
 
-let dispatchToken = AppDispatcher.register(analyzeDispatch)
+	getInitialState() {
+		console.log('get inital state here')
+	}
 
-function analyzeDispatch() {
-	let action = dispatchMsg.action;
-	console.log('hello from ArticleStore; received dispatchMsg: ', dispatchMsg);
-}
+	__onDispatch(dispatchMsg) {
+		console.log('hello from ArticleStore; received dispatchMsg: ', dispatchMsg);
+		let action = dispatchMsg.action.actionType;
+		let source = dispatchMsg.source;
 
-let ArticleStore = new Store();
+		switch(action) {
+			case AppConstants.CREATE_ARTICLE:
+				console.log('got CREATE_ARTICLE actionType');
+				break;
 
-export default ArticleStore;
+			default:
+				console.log('No match in articleStore');
+				return null;
+		}//end switch
+	}//end __onDispatch
+}//end Class
+
+let articleStore = new ArticleStore(AppDispatcher);
+
+console.log('articleStore', articleStore)
+
+export default articleStore;

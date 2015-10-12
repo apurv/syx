@@ -1,4 +1,4 @@
-import {Dispatcher} from 'flux';
+import { Dispatcher } from 'flux';
 import AppConstants from '../constants';
 
 let helpers = {
