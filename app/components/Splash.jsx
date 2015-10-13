@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Card from './Card.jsx';
+import CardsDisplay from './CardsDisplay.jsx';
 
 export default class Splash extends Component {
 	render() {
@@ -13,9 +13,9 @@ export default class Splash extends Component {
 			      </div>
 			    </div>
 			    
-	    		<Card />
-				<Card />
-				<Card />
+	    		<div className="row">
+					<CardsDisplay />
+				</div>
 		    </div>
 		)
 	}
