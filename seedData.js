@@ -39,6 +39,7 @@ let seedUsers = () => {
 
     let users = [
         {
+            username: 'test123',
             email: 'test@test.com',
             password: '123',
             role: 'admin',
@@ -47,6 +48,7 @@ let seedUsers = () => {
             },
         },
         {
+            username: 'qwe123',
             email: 'qwe@qwe.com',
             password: '123',
             role: 'admin',
@@ -55,6 +57,7 @@ let seedUsers = () => {
             },
         },
         {
+            username: 'asd123',
             email: 'asd@asd.com',
             password: '123',
             role: 'user',
@@ -63,6 +66,7 @@ let seedUsers = () => {
             },
         },
         {
+            username: 'zxc123',
             email: 'zxc@zxc.com',
             password: '123',
             role: 'user',
@@ -78,31 +82,31 @@ let seedUsers = () => {
 let seedArticles = (users) => {
     let articles = [
         {
-          name: 'Intro to ReactJS',
+          title: 'Intro to ReactJS',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['react', 'es6', 'webpack']
         },
         {
-          name: 'Intro to Angular2',
+          title: 'Intro to Angular2',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['angular', 'es6', 'angular2']
         },
         {
-          name: 'AngularJS Fundamentals',
+          title: 'AngularJS Fundamentals',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['angular', 'es6', 'webpack']
         },
         {
-          name: 'Advanced Directives in AngularJS',
+          title: 'Advanced Directives in AngularJS',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['angular', 'es6', 'directives']
         },
         {
-          name: 'AngularJS Authentication',
+          title: 'AngularJS Authentication',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['react', 'es6', 'webpack']
