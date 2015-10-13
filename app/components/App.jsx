@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import Navbar from './Navbar.jsx';
 import Splash from './Splash.jsx';
 import Card from './Card.jsx';
+import CardsDisplay from './CardsDisplay.jsx';
 require('bootstrap/dist/css/bootstrap.min.css');
 
 // import ArticleStore from '../stores/article.store';
 import AppDispatcher from '../dispatcher/dispatcher';
 
-
+var data =  ['card1', 'card2', 'card3'];
 
 export default class App extends Component {
 	render() {
@@ -16,11 +17,10 @@ export default class App extends Component {
 		    <Navbar />
 				<Splash />
 				<div className="row">
-					<Card />
-					<Card />
-					<Card />
+					<CardsDisplay data={ data } />
 				</div>
 			</div>
 		)
 	}
 }
+// 					<CardDisplay data={ data } />
