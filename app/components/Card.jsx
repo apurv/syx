@@ -24,11 +24,11 @@ export default class Card extends Component {
 
 		return (
 			<div>
-        <h2 onClick={this.processClick.bind(this)}>{article.title}</h2>
+        		<h2 onClick={this.processClick.bind(this)}>{article.title}</h2>
 				<p>{date}</p>
 				<p>{article.tags.join(", ")}</p>
-        <p><a className="btn btn-default" href="#" role="button">Read More »</a></p>
-      </div>
+        		<p><Link to="/Viewer" className="btn btn-default">Read More »</Link></p>
+     		</div>
 		)
 	}
 }

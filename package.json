@@ -50,6 +50,7 @@
     "webpack-hot-middleware": "^2.0.0"
   },
   "dependencies": {
+    "axios": "^0.7.0",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^2.10.2",
     "body-parser": "^1.14.1",

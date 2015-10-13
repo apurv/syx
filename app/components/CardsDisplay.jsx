@@ -62,13 +62,13 @@ export default class CardsDisplay extends Component {
 		return (
 			<div className="container">
 				{ this.state.articles.map(function(article) {
-                return (
-									<div className="col-xs-6 col-lg-4">
-										<Card key={article._id} article={article}/>
-									</div>
-								)
-            })
-        }
+		            return (
+						<div className="col-xs-6 col-lg-4">
+							<Card key={article._id} article={article}/>
+						</div>
+						)
+	            	})
+        		}
 			</div>
 		)
 	}
