@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import ArticleActions from '../actions/article.actions';
 import ArticleStore from '../stores/article.store';
+import moment from 'moment';
 
 export default class Card extends Component {
 	constructor(){
@@ -12,11 +13,19 @@ export default class Card extends Component {
 		ArticleActions.addArticle();
 	}
 
+	componentDidMount() {
+		console.log("this.props.article", this.props.article)
+	}
+
 	render() {
+		let article = this.props.article;
+		let date = moment(article.postDate).format("MMM DD hh:mm:ss");
+
 		return (
-			<div className="col-xs-6 col-lg-4">
-        <h2>Card</h2><span onClick={this.processClick.bind(this)}>Test</span>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+			<div>
+        <h2 onClick={this.processClick.bind(this)}>{article.title}</h2>
+				<p>{date}</p>
+				<p>{article.tags.join(", ")}</p>
         <p><a className="btn btn-default" href="#" role="button">Read More »</a></p>
       </div>
 		)

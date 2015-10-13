@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import ArticleActions from '../actions/article.actions';
 import ArticleStore from '../stores/article.store';
 import AppConstants from '../constants';
-import axios from "axios";
+import Card from './Card.jsx';
 
 export default class CardsDisplay extends Component {
 	constructor(){
@@ -60,15 +60,16 @@ export default class CardsDisplay extends Component {
 
 	render() {
 		return (
-			<div className="col-xs-6 col-lg-4">
-				{ this.state.articles.map(function(item) {
-                return <div>{item.author}</div>
+			<div className="container">
+				{ this.state.articles.map(function(article) {
+                return (
+									<div className="col-xs-6 col-lg-4">
+										<Card key={article._id} article={article}/>
+									</div>
+								)
             })
         }
-        <h2>Card</h2><span onClick={this.processClick.bind(this)}>Test</span>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a className="btn btn-default" href="#" role="button">Read More »</a></p>
-      </div>
+			</div>
 		)
 	}
 }

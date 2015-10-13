@@ -9,8 +9,13 @@ let Article = mongoose.model('Article');
 router.get('/', (req, res, next) => {
 
   // TODO: Add category search
-  Article.find({}).then((articles) => {
-    console.log("articles", articles);
+  Article.find({}).populate('author').then((articles) => {
+    let resArticles = _.map(articles, (article) => {
+      let newArticle = article.toJSON();
+      delete newArticle.author.salt;
+      delete newArticle.author.password;
+      return newArticle;
+    })
     res.json(articles);
   });
 });
