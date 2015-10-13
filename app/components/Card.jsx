@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import ArticleActions from '../actions/article.actions';
 import ArticleStore from '../stores/article.store';
 import { Link } from 'react-router';
-// import Viewer from './Viewer.jsx'
 
 export default class Card extends Component {
 	constructor(){
@@ -17,12 +16,12 @@ export default class Card extends Component {
 	render() {
 		return (
 			<div className="col-xs-6 col-lg-4">
-        <h2>Card</h2><span onClick={this.processClick.bind(this)}>Test</span>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p>
-      		<Link to="/Viewer" className="btn btn-default">Read More »</Link>
-        </p>
-      </div>
+		        <h2>Card</h2><span onClick={this.processClick.bind(this)}>Test</span>
+		        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+		        <p>
+		      		<Link to="/Viewer" className="btn btn-default">Read More »</Link>
+		        </p>
+	      	</div>
 		)
 	}
 }

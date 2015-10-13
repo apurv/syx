@@ -12,15 +12,11 @@ export default class App extends Component {
 	render() {
 		return (
 			<div>
-		    <Navbar />
-				<Splash />
+				<div className="container">
+			    	<Navbar />
+			    </div>
 
-				<div className="row">
-					<Card />
-					<Card />
-					<Card />
-				</div>
-				
+				{this.props.children}
 			</div>
 		)
 	}

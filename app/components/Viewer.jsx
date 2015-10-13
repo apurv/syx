@@ -11,31 +11,17 @@ import AppDispatcher from '../dispatcher/dispatcher';
 export default class Viewer extends Component {
 	render() {
 		return (
-	    <div className="container">
-
-	    	<div className="row">
-	    		<Navbar />
-	    	</div>
-
-	    	<div className="row">
-	    		<br />
-	    		<br />
-	    		<br />
-	    	</div>
-
+			<div className="container">
 				<div className="row">
 					<div className="col-md-2">
-						<span>Sections here</span>
+						<h3>Side-Bar</h3>
 					</div>
-
 					<div className="col-md-8">
-						<h1>Content Here</h1>
+						<h1>Article</h1>
 					</div>
-
-					<div className='col-md-2'>
-						<span>Control Panel</span>
+					<div className="col-md-2">
+						<h3>Control Panel</h3>
 					</div>
-
 				</div>
 			</div>
 		);
