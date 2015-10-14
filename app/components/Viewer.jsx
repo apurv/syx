@@ -61,7 +61,12 @@ export default class Viewer extends Component {
 	handleChange(event) {
 		console.log("invoked handleChange")
 		console.log("event", event)
-    this.setState({this.state.article.content: event.target.value});
+		let tempVar = this.state.article;
+		tempVar.content = event.target.value;
+		setState({
+			article: tempVar
+		});
+
   }
 
 	render() {
