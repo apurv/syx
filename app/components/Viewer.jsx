@@ -36,6 +36,7 @@ export default class Viewer extends Component {
 		this.setState({
 			article: ArticleActions.getArticle(this.props.params.id)
 		})
+		console.log('hi from compuonent will mount', this.state.artcle)
 	}
 
 	componentDidMount() {
@@ -58,31 +59,61 @@ export default class Viewer extends Component {
 
 	}
 
+	handleEditing (event) {
+		console.log('handleEditing', event)
+		this.setState({ editing: true });
+	}
+
+	handleEditingDone (event) {
+		console.log("yoyo", event)
+		if (event.keyCode === 13 ) { // submit
+			this.setState({ editing: false });
+		}
+	}
+
 	handleChange(event) {
 		console.log("invoked handleChange")
 		console.log("event", event)
 		let tempVar = this.state.article;
 		tempVar.content = event.target.value;
-		setState({
+		this.setState({
 			article: tempVar
 		});
-
   }
 
 	render() {
 
+    var viewStyle = {};
+    var editStyle = {};
 		let value = this.state.article.content;
 
+		console.log("this.state in render", this.state)
+
+    if (!this.state.editing) {
+      viewStyle.display = 'none';
+    } else {
+      editStyle.display = 'none';
+    }
+
 		return (
+
 			<div className="container">
 				<div className="row">
 					<div className="col-md-2">
 						<h3>Side-Bar</h3>
 					</div>
 
-					<div className="col-md-8">
+					<div className="col-md-8"  onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
 						<h1>Article</h1>
-						<textarea type="text" className="form-control" style={{height: '90vh'}} defaultValue={value} onChange={this.handleChange.bind(this)}></textarea>
+						<div dangerouslySetInnerHTML={this.markdownify()}></div>
+					</div>
+
+					<div className="col-md-8" style={viewStyle}>
+						<h1>Article</h1>
+						<textarea type="text" className="form-control" style={{height: '90vh'}} value={value}
+							onChange={this.handleChange.bind(this)}
+							onKeyDown={this.handleEditingDone.bind(this)}>
+						</textarea>
 					</div>
 
 
