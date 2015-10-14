@@ -15,7 +15,7 @@ export default class Card extends Component {
 	}
 
 	componentDidMount() {
-		console.log("this.props.article", this.props.article)
+		// console.log("this.props.article", this.props.article)
 	}
 
 	render() {
@@ -24,11 +24,12 @@ export default class Card extends Component {
 
 		return (
 			<div>
-        		<h2 onClick={this.processClick.bind(this)}>{article.title}</h2>
+        <h2 onClick={this.processClick.bind(this)}>{article.title}</h2>
 				<p>{date}</p>
 				<p>{article.tags.join(", ")}</p>
-        		<p><Link to="/Viewer" className="btn btn-default">Read More »</Link></p>
-     		</div>
+				<Link to={`/articles/${article._id}`} className="btn btn-default">Read More »</Link>
+     	</div>
 		)
 	}
 }
+        // <Link to="/Viewer" className="btn btn-default">Read More »</Link>
