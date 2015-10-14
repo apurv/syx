@@ -31,30 +31,31 @@ function getAllArticles() {
 }
 
 function getArticle(id) {
-	console.log("inside getArticle")
 
 	let cachedArticle;
 
 	_.forEach(ArticleStore.getAllStoreArticles(), (article) => {
 		if (id === article._id) {
 			cachedArticle = article;
-			console.log("set cachedArticle")
 		}
 	})
 
 	if (cachedArticle) {
-		console.log("dispatching payload", cachedArticle)
 		AppDispatcher.handleServerAction({
 			actionType: AppConstants.SET_CURRENT_ARTICLE,
 			payload: cachedArticle
 		});
+		return cachedArticle;
 	} else {
-		request.get(`/api/articles/${id}`).then(function (response) {
+		return request.get(`/api/articles/${id}`)
+		.then(function (response) {
 
 			AppDispatcher.handleServerAction({
 				actionType: AppConstants.SET_CURRENT_ARTICLE,
 				payload: response.data
 			});
+
+			return response.data;
 
 	  }).catch(function (err) {
 	    console.log("err", err);

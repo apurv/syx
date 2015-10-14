@@ -16,30 +16,57 @@ export default class Viewer extends Component {
 	constructor(props){
 		super(props);
 
+		this.state = {
+			article: {},
+			editing: false
+		};
+
+
 		let initalListener = ArticleStore.addListener(() => {
 			this.setState({
 				article: ArticleStore.getStoreArticle()
 			});
 
-			//maybe do unmounting instead?
 			initalListener.remove();
 		});
+	}
 
-		this.state = {
-			article: {}
-		};
+	componentWillMount() {
 
-		console.log("this.state", this.state)
-
+		this.setState({
+			article: ArticleActions.getArticle(this.props.params.id)
+		})
 	}
 
 	componentDidMount() {
-    this.setState({
-      article: ArticleActions.getArticle(this.props.params.id)
-    });
+		this.setState({
+			article: ArticleStore.getStoreArticle() || {}
+		});
+	}
+
+	markdownify() {
+		console.log("this.state", this.state.article instanceof Promise)
+		if (this.state.article.content) {
+			return {__html: marked(this.state.article.content)};
+		} else {
+			return {__html: ''};
+		}
+	}
+
+	editable() {
+		console.log("edit")
+
+	}
+
+	handleChange(event) {
+		console.log("invoked handleChange")
+		console.log("event", event)
+    this.setState({this.state.article.content: event.target.value});
   }
 
 	render() {
+
+		let value = this.state.article.content;
 
 		return (
 			<div className="container">
@@ -47,10 +74,13 @@ export default class Viewer extends Component {
 					<div className="col-md-2">
 						<h3>Side-Bar</h3>
 					</div>
+
 					<div className="col-md-8">
 						<h1>Article</h1>
-						<div dangerouslySetInnerHTML={{__html: marked(this.state.article.content)}}></div>
+						<textarea type="text" className="form-control" style={{height: '90vh'}} defaultValue={value} onChange={this.handleChange.bind(this)}></textarea>
 					</div>
+
+
 					<div className="col-md-2">
 						<h3>Control Panel</h3>
 					</div>
@@ -59,3 +89,5 @@ export default class Viewer extends Component {
 		);
 	}//end render
 }
+
+// <div dangerouslySetInnerHTML={this.markdownify()}></div>
