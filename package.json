@@ -5,7 +5,7 @@
   "repository": "https://github.com/apurv/syx",
   "scripts": {
     "build": "webpack --progress --colors",
-    "start": "node ./server/start.js",
+    "start": "nodemon --watch server -e js ./server/start.js",
     "test": "set BABEL_ENV=test; export BABEL_ENV=test; mocha --compilers js:babel/register app/**/*-test.js --recursive",
     "test:w": "chokidar '**/*.js' -i 'node_modules' -c 'npm run --silent test'",
     "test:d": "set BABEL_ENV=test; export BABEL_ENV=test; mocha --compilers js:babel/register app/**/*-test.js --recursive --debug-brk"
@@ -58,6 +58,7 @@
     "chalk": "^1.1.1",
     "connect-mongo": "^0.8.2",
     "cookie-parser": "^1.4.0",
+    "dropzone": "^4.2.0",
     "exports-loader": "^0.6.2",
     "express-session": "^1.11.3",
     "extract-text-webpack-plugin": "^0.8.2",
@@ -69,6 +70,7 @@
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "mongoose": "^4.1.10",
+    "multer": "^1.0.6",
     "passport": "^0.3.0",
     "passport-github": "^1.0.0",
     "passport-google-oauth": "^0.2.0",

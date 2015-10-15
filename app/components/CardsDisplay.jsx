@@ -50,10 +50,10 @@ export default class CardsDisplay extends Component {
 			<div className="container">
 				{ this.state.articles.map(function(article) {
                 return (
-									<div key={article._id} className="col-xs-6 col-lg-4">
-										<Card article={article}/>
-									</div>
-								)
+					<div key={article._id} className="col-xs-6 col-lg-4">
+						<Card article={article}/>
+					</div>
+				)
             })
         }
 			</div>
