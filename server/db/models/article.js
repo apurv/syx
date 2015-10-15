@@ -14,8 +14,8 @@ let schema = new mongoose.Schema({
   media: [{
   	name: String,
   	type: String,
-  	height: String,
-  	width: String
+  	height: Number,
+  	width: Number
   }]
 });
 

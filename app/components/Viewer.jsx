@@ -87,26 +87,18 @@ export default class Viewer extends Component {
     }
 
 		return (
-<<<<<<< HEAD
-=======
-
->>>>>>> develop
 			<div className="container" style={{ marginTop: '50px' }}>
 				<div className="row">
 					<div className="col-md-2">
 						<h3>Side-Bar</h3>
 					</div>
-<<<<<<< HEAD
-					<div className="col-md-6">
-=======
 
-					<div className="col-md-8" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
+					<div className="col-md-7" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
 						<h1>Article</h1>
 						<div dangerouslySetInnerHTML={this.markdownify()}></div>
 					</div>
 
 					<div className="col-md-8" style={viewStyle}>
->>>>>>> develop
 						<h1>Article</h1>
 						<textarea type="text"
 							className="form-control"
@@ -117,14 +109,10 @@ export default class Viewer extends Component {
 							onBlur={this.handleEditingDone.bind(this)}>
 						</textarea>
 					</div>
-<<<<<<< HEAD
-					<div className="col-md-4">
-						<ToolPanel />
-=======
 
-					<div className="col-md-2">
-						<h3>Control Panel</h3>
->>>>>>> develop
+					<div className="col-md-3">
+						<ToolPanel />
+
 					</div>
 				</div>
 			</div>

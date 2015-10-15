@@ -19,23 +19,23 @@ class ArticleStore extends Store {
 
 		switch(action) {
 
-      case AppConstants.GET_ARTICLES:
-        articles = payload;
-        this.__emitChange()
-        break;
+	    case AppConstants.GET_ARTICLES:
+	        articles = payload;
+	        this.__emitChange()
+	        break;
 
-			case AppConstants.SET_CURRENT_ARTICLE:
-        current_article = payload;
-        this.__emitChange()
-        break;
+		case AppConstants.SET_CURRENT_ARTICLE:
+	        current_article = payload;
+	        this.__emitChange()
+	        break;
 
-			case AppConstants.CREATE_ARTICLE:
-				console.log('got CREATE_ARTICLE actionType');
-				break;
+		case AppConstants.CREATE_ARTICLE:
+			console.log('got CREATE_ARTICLE actionType');
+			break;
 
-			default:
-				console.log('No match in articleStore');
-				break;
+		default:
+			console.log('No match in articleStore');
+			break;
 		}//end switch
 	}//end __onDispatch
 
