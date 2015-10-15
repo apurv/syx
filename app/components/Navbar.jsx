@@ -1,6 +1,38 @@
 import React, {Component} from "react";
+import UserActions from '../actions/user.actions';
+import UserStore from '../stores/user.store';
 
 export default class Navbar extends Component {
+
+	constructor() {
+		super()
+
+		this.state = {
+			user: {},
+			listeners: {
+				userStore: {}
+			}
+		};
+	}
+
+	componentWillMount() {
+		UserActions.isAuthenticated();
+	}
+
+  componentDidMount() {
+    this.state.listeners.userStore = UserStore.addListener(this._onChange.bind(this));
+  }
+
+  componentWillUnmount() {
+		for(let token of this.state.listeners) {
+			token.remove();
+		}
+  }
+
+  _onChange() {
+    this.setState({ user: UserStore.getCurrentStoreUser() });
+  }
+
 	render() {
 		return (
 		    <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -17,7 +49,7 @@ export default class Navbar extends Component {
 		        <div id="navbar" className="navbar-collapse collapse">
 		          <ul className="nav navbar-nav navbar-right">
 		            <li><a href="">Articles</a></li>
-		            <li><a href="/auth/github">GitHub Login</a></li>
+		            <li><a href="/auth/github">Welcome {this.state.user.username}</a></li>
 		          </ul>
 		        </div>
 		      </div>

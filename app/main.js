@@ -21,8 +21,10 @@ render(
     	<Route path="/" component={App}>
 	    	<IndexRoute component={Splash} />
 	    	<Route path="Card" component={Card} />
-	    	<Route path="Viewer" component={Viewer} />
+				<Route path="articles/:id" component={Viewer} />
     	</Route>
 	</Router>
   ), document.getElementById("container")
 );
+
+	    	// <Route path="Viewer" component={Viewer} />

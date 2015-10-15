@@ -4,12 +4,9 @@ import { Store } from 'flux/utils';
 import ArticleActions from '../actions/article.actions';
 
 let articles = {};
+let current_article = {};
 
 class ArticleStore extends Store {
-
-	getInitialState() {
-		console.log('get inital state here')
-	}
 
 	__onDispatch(dispatchMsg) {
 		console.log('hello from ArticleStore; received dispatchMsg: ', dispatchMsg);
@@ -23,8 +20,12 @@ class ArticleStore extends Store {
 		switch(action) {
 
       case AppConstants.GET_ARTICLES:
-        console.log("got GET_ARTICLES actionType")
         articles = payload;
+        this.__emitChange()
+        break;
+
+			case AppConstants.SET_CURRENT_ARTICLE:
+        current_article = payload;
         this.__emitChange()
         break;
 
@@ -41,6 +42,10 @@ class ArticleStore extends Store {
   getAllStoreArticles() {
     return articles;
   }
+
+	getStoreArticle() {
+		return current_article;
+	}
 
 }//end Class
 

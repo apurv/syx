@@ -34,7 +34,7 @@ export default AppDispatcher;
   * register
   * @param {function} callback The callback to be registered.
   * @return {number} The index of the callback within the _callbacks array.
-  */ 
+  */
 
   /**
   * unregister
