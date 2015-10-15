@@ -12,8 +12,8 @@ export default class CardsDisplay extends Component {
 			articles: []
 		};
 
-		let initalListener = ArticleStore.addListener(() => {
-			console.log("inside handler", ArticleStore.getAllStoreArticles())
+		let initalListener = ArticleStore.addListener((e) => {
+			console.log("inside handler", e)
 			this.setState({
 				articles: ArticleStore.getAllStoreArticles()
 			});
@@ -23,7 +23,6 @@ export default class CardsDisplay extends Component {
 	}
 
 	componentDidMount() {
-		console.log("componentDidMount");
 		this.state = {
 			articles: ArticleActions.getAllArticles()
 		};

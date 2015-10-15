@@ -1,6 +1,8 @@
 import AppDispatcher from '../dispatcher/dispatcher';
 import AppConstants from '../constants';
+import ArticleStore from '../stores/article.store';
 import request from "axios";
+import _ from 'lodash';
 
 let ArticleActions = {
 	addArticle,
@@ -17,7 +19,7 @@ function addArticle() {
 }
 
 function getAllArticles() {
-	request.get('/api/articles').then(function (response) {
+	return request.get('/api/articles').then(function (response) {
 		AppDispatcher.handleServerAction({
 			actionType: AppConstants.GET_ARTICLES,
 			payload: response.data
@@ -29,12 +31,38 @@ function getAllArticles() {
 }
 
 function getArticle(id) {
-	console.log("id", id);
-	request.get('/api/articles/:id').then(function (response) {
-    console.log("response", response);
-  }).catch(function (err) {
-    console.log("err", err);
-  });
+
+	let cachedArticle;
+
+	_.forEach(ArticleStore.getAllStoreArticles(), (article) => {
+		if (id === article._id) {
+			cachedArticle = article;
+		}
+	})
+
+	if (cachedArticle) {
+		AppDispatcher.handleServerAction({
+			actionType: AppConstants.SET_CURRENT_ARTICLE,
+			payload: cachedArticle
+		});
+		return cachedArticle;
+	} else {
+
+		return request.get(`/api/articles/${id}`)
+		.then(function (response) {
+
+			AppDispatcher.handleServerAction({
+				actionType: AppConstants.SET_CURRENT_ARTICLE,
+				payload: response.data
+			});
+
+			return response.data;
+
+	  }).catch(function (err) {
+	    console.log("err", err);
+	  });
+	}
+
 }
 
 function updateArticle(id) {
