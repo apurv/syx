@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './Navbar.jsx';
-import Splash from './Splash.jsx';
-import Card from './Card.jsx';
 import { Link } from 'react-router';
 import ArticleActions from '../actions/article.actions';
 import articleStore from '../stores/article.store';
@@ -18,31 +15,27 @@ export default class Viewer extends Component {
 		super(props);
 
 		this.state = {
-			article: {},
-			editing: false
+			article: ArticleActions.getArticle(this.props.params.id),
+			editing: false,
+			listeners: {
+				articleStore: {}
+			}
 		};
-
-
-		let initalListener = ArticleStore.addListener(() => {
-			this.setState({
-				article: ArticleStore.getStoreArticle()
-			});
-
-			initalListener.remove();
-		});
 	}
 
-	componentWillMount() {
-		this.setState({
-			article: ArticleActions.getArticle(this.props.params.id)
-		});
-	}
+  componentDidMount() {
+    this.state.listeners.articleStore = ArticleStore.addListener(this._onChange.bind(this));
+  }
 
-	componentDidMount() {
-		this.setState({
-			article: ArticleStore.getStoreArticle() || {}
-		});
-	}
+  componentWillUnmount() {
+		Object.keys(this.state.listeners).forEach( token => {
+			this.state.listeners[token].remove();
+		}.bind(this));
+  }
+
+  _onChange() {
+    this.setState({ article: ArticleStore.getStoreArticle() });
+  }
 
 	markdownify() {
 		if (this.state.article.content) {

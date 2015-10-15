@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Navbar from './Navbar.jsx';
+import NavigationBar from './NavigationBar.jsx';
 
 require('bootstrap/dist/css/bootstrap.min.css');
 import { Router, Route, Link } from 'react-router';
@@ -13,7 +13,7 @@ export default class App extends Component {
 		return (
 			<div>
 				<div className="container">
-			    	<Navbar />
+			    	<NavigationBar />
 			  </div>
 				{this.props.children}
 			</div>

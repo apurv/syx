@@ -10,12 +10,12 @@ let UserActions = {
 
 
 function isAuthenticated() {
-	return request.get('/api/users').then(function (response) {
+	return request.get('/api/users').then(response => {
 		AppDispatcher.handleServerAction({
 			actionType: AppConstants.SET_USER,
 			payload: response.data
 		});
-  }).catch(function (err) {
+  }).catch(err => {
     console.log("err", err);
   });
 }
