@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import Navbar from './Navbar.jsx';
 import Splash from './Splash.jsx';
 import Card from './Card.jsx';
@@ -32,11 +33,9 @@ export default class Viewer extends Component {
 	}
 
 	componentWillMount() {
-
 		this.setState({
 			article: ArticleActions.getArticle(this.props.params.id)
-		})
-		console.log('hi from compuonent will mount', this.state.artcle)
+		});
 	}
 
 	componentDidMount() {
@@ -46,7 +45,6 @@ export default class Viewer extends Component {
 	}
 
 	markdownify() {
-		console.log("this.state", this.state.article instanceof Promise)
 		if (this.state.article.content) {
 			return {__html: marked(this.state.article.content)};
 		} else {
@@ -54,26 +52,19 @@ export default class Viewer extends Component {
 		}
 	}
 
-	editable() {
-		console.log("edit")
-
-	}
-
 	handleEditing (event) {
-		console.log('handleEditing', event)
+		let self = this;
 		this.setState({ editing: true });
+		setTimeout(function () {
+			ReactDOM.findDOMNode(self.refs.articleTextArea).focus();
+		}, 0);
 	}
 
 	handleEditingDone (event) {
-		console.log("yoyo", event)
-		if (event.keyCode === 13 ) { // submit
 			this.setState({ editing: false });
-		}
 	}
 
 	handleChange(event) {
-		console.log("invoked handleChange")
-		console.log("event", event)
 		let tempVar = this.state.article;
 		tempVar.content = event.target.value;
 		this.setState({
@@ -82,12 +73,9 @@ export default class Viewer extends Component {
   }
 
 	render() {
-
-    var viewStyle = {};
-    var editStyle = {};
+    let viewStyle = {};
+    let editStyle = {};
 		let value = this.state.article.content;
-
-		console.log("this.state in render", this.state)
 
     if (!this.state.editing) {
       viewStyle.display = 'none';
@@ -97,25 +85,28 @@ export default class Viewer extends Component {
 
 		return (
 
-			<div className="container">
+			<div className="container" style={{ marginTop: '50px' }}>
 				<div className="row">
 					<div className="col-md-2">
 						<h3>Side-Bar</h3>
 					</div>
 
-					<div className="col-md-8"  onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
+					<div className="col-md-8" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
 						<h1>Article</h1>
 						<div dangerouslySetInnerHTML={this.markdownify()}></div>
 					</div>
 
 					<div className="col-md-8" style={viewStyle}>
 						<h1>Article</h1>
-						<textarea type="text" className="form-control" style={{height: '90vh'}} value={value}
+						<textarea type="text"
+							className="form-control"
+							ref="articleTextArea"
+							style={{height: '90vh'}}
+							value={value}
 							onChange={this.handleChange.bind(this)}
-							onKeyDown={this.handleEditingDone.bind(this)}>
+							onBlur={this.handleEditingDone.bind(this)}>
 						</textarea>
 					</div>
-
 
 					<div className="col-md-2">
 						<h3>Control Panel</h3>
@@ -125,5 +116,3 @@ export default class Viewer extends Component {
 		);
 	}//end render
 }
-
-// <div dangerouslySetInnerHTML={this.markdownify()}></div>
