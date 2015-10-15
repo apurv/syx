@@ -19,7 +19,7 @@ function addArticle() {
 }
 
 function getAllArticles() {
-	request.get('/api/articles').then(function (response) {
+	return request.get('/api/articles').then(function (response) {
 		AppDispatcher.handleServerAction({
 			actionType: AppConstants.GET_ARTICLES,
 			payload: response.data
@@ -47,6 +47,7 @@ function getArticle(id) {
 		});
 		return cachedArticle;
 	} else {
+
 		return request.get(`/api/articles/${id}`)
 		.then(function (response) {
 
