@@ -6,8 +6,10 @@ import AppDispatcher from '../dispatcher/dispatcher';
 import AppConstants from '../constants';
 import Dropzone from 'dropzone';
 import axios from 'axios';
+// import AWS from 'aws-sdk'
 
 require('dropzone/dist/min/dropzone.min.css');
+let s3 = new AWS.S3();
 
 export default class ToolPanel extends Component {
 
@@ -29,47 +31,58 @@ export default class ToolPanel extends Component {
 	componentDidMount() {
 
 		let mountedComponent = this;
-		
-		function computeAmazonURL(){
-			// TODO -- SETUP AMAZON S3 AND UPDATE THIS URL
-			let baseURL = `api/forAmazonServer/`;
-			return `${baseURL}${mountedComponent.state.article._id}/media`;
+		let addedFileData = [];
+
+		//Ensure media info is URI safe
+		function encodeName(str) {
+			let spaceRegEx = /\s/gm;
+			return encodeURIComponent(str.replace(spaceRegEx, "_"));
 		}
 
-		function computeSyxURL(){
-			let baseURL = `api/articles/`;
-			return `${baseURL}${mountedComponent.state.article._id}/media`;
-		}
+		//store uri safe info
+		function setMediaInfoInMemory(file, done) {
+			let modName = encodeName(file.name);
+			let modFolder = encodeName(mountedComponent.state.article.title);
 
-		// function addedFileEvent(file) {
-
-		// }
-
-		// function uploadErrorEvent(file, errorMsg, xhrObj) {
-		// 	console.log('inside uploadErrorEvent function. args:', arguments);
-		// }
-
-		// function uploadComplete(file) {
-		// 	console.log(`uploadComplete`, arguments);
-		// }
-
-		function createFileInfo(file) {
-
-			let mediaInfo = {
+			addedFileData.push({
 				name: file.name,
+				urlEncodedName: modName,
+				amazonFolder: modFolder,
 				type: file.type,
 				height: file.height,
 				width: file.width
-			};
+			});
 
-			return mediaInfo;
+			done();
 		}
 
-		function addMediaInfo(file) {
+		function computeAmazonURL(){
 
-			let infoToSend = createFileInfo(file);
+			let fileInfo = addedFileData[addedFileData.length - 1];
+
+			//TODO -- switch from localhost to amazon when moving to production
+			let amazonBaseUrl = 'https://s3.amazonaws.com/syx/article-media/';
+			let localhost = 'http://127.0.0.1:3000/syx/article-media/';
+
+			let fullAmazonUrl = `${localhost}${fileInfo.amazonFolder}/${fileInfo.urlEncodedName}`;
+			fileInfo.s3URL = fullAmazonUrl;
+			return fullAmazonUrl;
+		}
+
+		function computeSyxURL() {
+			let baseUrl = `api/articles/`;
+			let articleId = mountedComponent.state.article._id;
+			return `${baseUrl}${articleId}/media`;
+		}
+
+		function saveMediaInfoToSyx(file) {
+			let fileInfo = addedFileData[addedFileData.length - 1];
+			fileInfo.width = file.width;
+			fileInfo.height = file.height;
+
+			console.log('in saveMediaInfoToSyx', fileInfo);
 			
-			axios.put(computeSyxURL(), infoToSend)
+			axios.put(computeSyxURL(), fileInfo)
 			.then(res => {
 				console.log('Successfully uploaded to our server. Res: ', res);
 			})
@@ -78,21 +91,20 @@ export default class ToolPanel extends Component {
 				throw new Error(res)
 			});
 		}
-		
+
 		//Wait for thumbnail event because the File.width property is a DropzoneJS extension
 		// and is not a part of the core File API; it is added later.
 		//http://stackoverflow.com/questions/25927381/undefined-returned-when-accessing-some-listed-properties-of-file-object
 		Dropzone.options.dropzoneForm = {
 			acceptedFiles: 'image/*',
-			init: function() {
-				// this.on("addedfile", addMediaInfo);
-				// this.on('error', uploadErrorEvent);
-				this.on('thumbnail', addMediaInfo);
-			},
 			url: computeAmazonURL,
-			method: 'put',
+			method: 'post',
 			dictDefaultMessage: `Drop files here.`,
-			dictFileTooBig: `File too big!`
+			dictFileTooBig: `File too big!`,
+			accept: setMediaInfoInMemory,
+			init: function() {
+				this.on('thumbnail', saveMediaInfoToSyx);
+			},
 		};
 	}
 
