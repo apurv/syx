@@ -1,0 +1,27 @@
+/*
+ * imports
+ */
+
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "./_fonts";
+
+
+/*
+ * register fonts
+ */
+
+@include register-font('DIN');
+
+
+/*
+ * viewpanel
+ */
+
+ .syx-viewpanel {
+     @include use-registered-font('DIN');
+     font-style: normal;
+     font-weight: 400;
+     outline: none;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+ }

@@ -1,0 +1,34 @@
+/*
+ * _fonts.scss
+ */
+
+$font_dir: '../fonts/';
+
+/* _simple-font-url('DIN', 'eot'); */
+@function _simple-font-url($name, $extension) {
+    @return url($font_dir + $name + '.' + $extension);
+}
+
+/* _full-font-url('DIN', 'woff', 'embedded-opentype', '?#iefix'); */
+@function _full-font-url($name, $extension, $format, $hash: '') {
+    @return url($font_dir + $name + '/' + $name + '.' + $extension + $hash) format($format);
+}
+
+/* register-font('DIN'); */
+@mixin register-font($name) {
+    @font-face {
+        font-family: $name;
+        font-style: normal;
+        font-weight: normal;
+        src: _full-font-url($name, 'ttf', 'truetype');
+	}
+}
+
+/*
+use-registered-font('DIN');
+*/
+@mixin use-registered-font($name) {
+    font-family: $name, 'Helvetica Neue';
+    font-weight: normal;
+    letter-spacing: 0;
+}
