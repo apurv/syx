@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+import LeftSidebar from './LeftSidebar.jsx';
 import ArticleActions from '../actions/article.actions';
 import articleStore from '../stores/article.store';
 import AppDispatcher from '../dispatcher/dispatcher';
@@ -55,6 +56,11 @@ export default class Viewer extends Component {
 
 	handleEditingDone (event) {
 			this.setState({ editing: false });
+			ArticleActions.updateArticle(this.state.article._id, this.state.article)
+			.then(() => {
+				// console.log(".then invoked", ArticleStore.getStoreArticle())
+				this._onChange();
+			}.bind(this));
 	}
 
 	handleChange(event) {
@@ -66,6 +72,7 @@ export default class Viewer extends Component {
   }
 
 	render() {
+		console.log("%c VIEWER render invoked ", 'background: #222; color: #bada55')
     let viewStyle = {};
     let editStyle = {};
 		let value = this.state.article.content;
@@ -80,9 +87,7 @@ export default class Viewer extends Component {
 
 			<div className="container" style={{ marginTop: '50px' }}>
 				<div className="row">
-					<div className="col-md-2">
-						<h3>Side-Bar</h3>
-					</div>
+					<LeftSidebar article={this.state.article} />
 
 					<div className="col-md-8" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
 						<h1>Article</h1>

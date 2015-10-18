@@ -12,19 +12,22 @@ let ArticleActions = {
 	deleteArticle
 };
 
-function addArticle() {
-	AppDispatcher.handleViewAction({
-		actionType: AppConstants.CREATE_ARTICLE
-	});
+function addArticle(authorId) {
+	return request.post('/api/articles', { author: authorId }).then(response => {
+		console.log('response for add article', response)
+		AppDispatcher.handleViewAction({
+			actionType: AppConstants.CREATE_ARTICLE,
+			payload: response.data
+		});
+	})
 }
 
 function getAllArticles() {
-	return request.get('/api/articles').then(function (response) {
+	return request.get('/api/articles').then(response => {
 		AppDispatcher.handleServerAction({
 			actionType: AppConstants.GET_ARTICLES,
 			payload: response.data
 		});
-
   }).catch(function (err) {
     console.log("err", err);
   });
@@ -48,8 +51,7 @@ function getArticle(id) {
 		return cachedArticle;
 	} else {
 
-		return request.get(`/api/articles/${id}`)
-		.then(function (response) {
+		return request.get(`/api/articles/${id}`).then(response => {
 
 			AppDispatcher.handleServerAction({
 				actionType: AppConstants.SET_CURRENT_ARTICLE,
@@ -62,13 +64,15 @@ function getArticle(id) {
 	    console.log("err", err);
 	  });
 	}
-
 }
 
-function updateArticle(id) {
+function updateArticle(id, article) {
 	console.log("id", id);
-	request.put('/api/articles/:id').then(function (response) {
-    console.log("response", response);
+	return request.put('/api/articles/' + id, article).then(response => {
+		AppDispatcher.handleServerAction({
+			actionType: AppConstants.SET_CURRENT_ARTICLE,
+			payload: response.data
+		});
   }).catch(function (err) {
     console.log("err", err);
   });
@@ -76,7 +80,7 @@ function updateArticle(id) {
 
 function deleteArticle(id) {
 	console.log("id", id);
-	request.delete('/api/articles/:id').then(function (response) {
+	request.delete('/api/articles/:id').then(response => {
     console.log("response", response);
   }).catch(function (err) {
     console.log("err", err);

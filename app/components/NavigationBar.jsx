@@ -52,7 +52,7 @@ export default class NavigationBar extends Component {
 		    <Nav right eventKey={0}> {/* This is the eventKey referenced */}
 		      <NavItem eventKey={1} href="#">Articles</NavItem>
 					<NavItem eventKey={2} href="/auth/github" style={loggedIn}>Login with Github</NavItem>
-		      <NavDropdown eventKey={2} title={this.state.user.username} id="collapsible-navbar-dropdown" style={loggedOut}>
+		      <NavDropdown eventKey={2} title={this.state.user.username || ''} id="collapsible-navbar-dropdown" style={loggedOut}>
 		        <MenuItem eventKey="1">Edit Profile</MenuItem>
 		        <MenuItem divider />
 		        <MenuItem eventKey="2">Logout</MenuItem>

@@ -31,6 +31,8 @@ class ArticleStore extends Store {
 
 			case AppConstants.CREATE_ARTICLE:
 				console.log('got CREATE_ARTICLE actionType');
+				// article = payload;
+				// router.transitionTo('/dashboard')
 				break;
 
 			default:
