@@ -20,6 +20,7 @@ module.exports = {
 	module: {
 		loaders: [
 			{ test: /\.css$/, loader: "style-loader!css-loader" },
+			{ test: /\.scss$/, loaders: ["style", "css", "sass"] },
 			{ test: /\.js$/, include: /app/, loader: "babel-loader" },
 			{ test: /\.jsx?$/, exclude: /(node_modules|bower_components)/, loader: 'babel' },
 			{ test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
@@ -27,6 +28,10 @@ module.exports = {
 			{ test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
 			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
 		]
+	},
+	resolve: {
+		modulesDirectories: ['node_modules', 'web_modules', 'bower_components'],
+		extensions: ['', '.js', '.jsx', '.json', '.scss', '.sass', '.less']
 	},
 	devtool: "source-map",
 	plugins: [

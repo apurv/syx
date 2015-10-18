@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import LeftSidebar from './LeftSidebar.jsx';
+import LeftSidebar from './LeftSidebar';
 import ArticleActions from '../actions/article.actions';
 import articleStore from '../stores/article.store';
 import AppDispatcher from '../dispatcher/dispatcher';
 import ArticleStore from '../stores/article.store';
 import marked from 'marked';
-require('bootstrap/dist/css/bootstrap.min.css');
 
 
 export default class Viewer extends Component {
@@ -89,7 +88,7 @@ export default class Viewer extends Component {
 				<div className="row">
 					<LeftSidebar article={this.state.article} />
 
-					<div className="col-md-8" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
+					<div className="col-md-8 syx-viewpanel" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
 						<h1>Article</h1>
 						<div dangerouslySetInnerHTML={this.markdownify()}></div>
 					</div>

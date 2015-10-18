@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import CardsDisplay from './CardsDisplay.jsx';
+import CardsDisplay from './CardsDisplay';
 
 export default class Splash extends Component {
     render() {
