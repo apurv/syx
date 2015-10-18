@@ -43,7 +43,10 @@ class UserStore extends Store {
 		return current_user;
 	}
 
-
+	isAdmin() {
+		// CHANGE THIS TO ADMIN
+		return current_user.role === 'user';
+	}
 }//end Class
 
 let userStore = new UserStore(AppDispatcher);

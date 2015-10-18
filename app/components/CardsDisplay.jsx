@@ -1,61 +1,75 @@
 import React, {Component} from "react";
 import ArticleActions from '../actions/article.actions';
 import ArticleStore from '../stores/article.store';
+import UserStore from '../stores/user.store';
 import AppConstants from '../constants';
 import Card from './Card.jsx';
 
 export default class CardsDisplay extends Component {
-	constructor(){
-		super();
+    constructor() {
+        super();
 
-		this.state = {
-			articles: []
-		};
+        this.state = {
+            articles: []
+        };
 
-		let initalListener = ArticleStore.addListener((e) => {
-			console.log("inside handler", e)
-			this.setState({
-				articles: ArticleStore.getAllStoreArticles()
-			});
+        let initalListener = ArticleStore.addListener((e) => {
+            console.log("inside handler", e)
+            this.setState({
+                articles: ArticleStore.getAllStoreArticles()
+            });
 
-			initalListener.remove();
-		});
-	}
+            initalListener.remove();
+        });
+    }
 
-	componentDidMount() {
-		this.state = {
-			articles: ArticleActions.getAllArticles()
-		};
-	}
+    componentDidMount() {
+        this.state = {
+            articles: ArticleActions.getAllArticles()
+        };
+    }
 
-	processClick () {
-		console.log('hi from Card Component', this.state)
-	}
+    processClick() {
+        console.log('hi from Card Component', this.state)
+    }
 
-	getArticle() {
-		ArticleActions.getArticle();
-	}
+    addArticle() {
+        ArticleActions.addArticle(UserStore.getCurrentStoreUser()._id);
+    }
 
-	updateArticle() {
-		ArticleActions.updateArticle();
-	}
+    getArticle() {
+        ArticleActions.getArticle();
+    }
 
-	deleteArticle() {
-		ArticleActions.deleteArticle();
-	}
+    updateArticle() {
+        ArticleActions.updateArticle();
+    }
 
-	render() {
-		return (
-			<div className="container">
-				{ this.state.articles.map(function(article) {
-                return (
-									<div key={article._id} className="col-xs-6 col-lg-4">
-										<Card article={article}/>
-									</div>
-								)
-            })
+    deleteArticle() {
+        ArticleActions.deleteArticle();
+    }
+
+    isAdmin() {
+        if (!UserStore.isAdmin()) {
+            return 'none';
         }
-			</div>
-		)
-	}
+    }
+
+    render() {
+        return (
+            <div className="container">
+                { this.state.articles.map(function (article) {
+                    return (
+                        <div key={article._id} className="col-xs-6 col-lg-4">
+                            <Card article={article}/>
+                        </div>
+                    )
+                })
+                }
+                <button className="btn btn-success btn-lg" style={{ margin:'50px', display: this.isAdmin() }}
+                        onClick={this.addArticle.bind(this)}> Contribute
+                </button>
+            </div>
+        )
+    }
 }

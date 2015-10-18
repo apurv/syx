@@ -76,6 +76,7 @@
     "passport-local": "^1.0.0",
     "q": "^1.4.1",
     "react": "^0.14.0-beta3",
+    "react-bootstrap": "^0.27.1",
     "react-dom": "^0.14.0-beta3",
     "react-router": "1.0.0-rc3",
     "serve-favicon": "^2.3.0",
