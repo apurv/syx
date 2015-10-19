@@ -17,9 +17,9 @@ class ArticleStore extends Store {
       var payload = dispatchMsg.action.payload
     }
 
-		switch(action) {
+	switch(action) {
 
-	    case AppConstants.GET_ARTICLES:
+		case AppConstants.GET_ARTICLES:
 	        articles = payload;
 	        this.__emitChange()
 	        break;
@@ -31,6 +31,8 @@ class ArticleStore extends Store {
 
 		case AppConstants.CREATE_ARTICLE:
 			console.log('got CREATE_ARTICLE actionType');
+			// article = payload;
+			// router.transitionTo('/dashboard')
 			break;
 
 		default:
@@ -39,14 +41,13 @@ class ArticleStore extends Store {
 		}//end switch
 	}//end __onDispatch
 
-  getAllStoreArticles() {
-    return articles;
-  }
+	getAllStoreArticles() {
+		return articles;
+	}
 
 	getStoreArticle() {
 		return current_article;
 	}
-
 }//end Class
 
 let articleStore = new ArticleStore(AppDispatcher);

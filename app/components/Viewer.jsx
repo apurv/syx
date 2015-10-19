@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import marked from 'marked';
 
-import Navbar from './Navbar.jsx';
 import Splash from './Splash.jsx';
 import Card from './Card.jsx';
 import ToolPanel from './Viewer.ToolPanel.jsx';
+import LeftSidebar from './LeftSidebar.jsx';
 import ArticleActions from '../actions/article.actions';
 import articleStore from '../stores/article.store';
 import AppDispatcher from '../dispatcher/dispatcher';
@@ -21,30 +21,26 @@ export default class Viewer extends Component {
 		super(props);
 
 		this.state = {
-			article: {},
-			editing: false
+			article: ArticleActions.getArticle(this.props.params.id),
+			editing: false,
+			listeners: {
+				articleStore: {}
+			}
 		};
-
-
-		let initalListener = ArticleStore.addListener(() => {
-			this.setState({
-				article: ArticleStore.getStoreArticle()
-			});
-
-			initalListener.remove();
-		});
 	}
 
-	componentWillMount() {
-		this.setState({
-			article: ArticleActions.getArticle(this.props.params.id)
-		});
+  componentDidMount() {
+    this.state.listeners.articleStore = ArticleStore.addListener(this._onChange.bind(this));
+  }
+
+	componentWillUnmount() {
+		Object.keys(this.state.listeners).forEach( token => {
+			this.state.listeners[token].remove();
+		}.bind(this));
 	}
 
-	componentDidMount() {
-		this.setState({
-			article: ArticleStore.getStoreArticle() || {}
-		});
+	_onChange() {
+		this.setState({ article: ArticleStore.getStoreArticle() });
 	}
 
 	markdownify() {
@@ -64,7 +60,12 @@ export default class Viewer extends Component {
 	}
 
 	handleEditingDone (event) {
-			this.setState({ editing: false });
+		this.setState({ editing: false });
+		ArticleActions.updateArticle(this.state.article._id, this.state.article)
+		.then(() => {
+			// console.log(".then invoked", ArticleStore.getStoreArticle())
+			this._onChange();
+		}.bind(this));
 	}
 
 	handleChange(event) {
@@ -76,9 +77,10 @@ export default class Viewer extends Component {
   }
 
 	render() {
+		console.log("%c VIEWER render invoked ", 'background: #222; color: #bada55')
     let viewStyle = {};
     let editStyle = {};
-		let value = this.state.article.content;
+	let value = this.state.article.content;
 
     if (!this.state.editing) {
       viewStyle.display = 'none';
@@ -89,16 +91,14 @@ export default class Viewer extends Component {
 		return (
 			<div className="container" style={{ marginTop: '50px' }}>
 				<div className="row">
-					<div className="col-md-2">
-						<h3>Side-Bar</h3>
-					</div>
+					<LeftSidebar article={this.state.article} />
 
 					<div className="col-md-7" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
 						<h1>Article</h1>
 						<div dangerouslySetInnerHTML={this.markdownify()}></div>
 					</div>
 
-					<div className="col-md-8" style={viewStyle}>
+					<div className="col-md-7" style={viewStyle}>
 						<h1>Article</h1>
 						<textarea type="text"
 							className="form-control"
@@ -112,7 +112,6 @@ export default class Viewer extends Component {
 
 					<div className="col-md-3">
 						<ToolPanel />
-
 					</div>
 				</div>
 			</div>

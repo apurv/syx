@@ -4,6 +4,7 @@ module.exports = router;
 let _ = require('lodash');
 let mongoose = require('mongoose');
 let Article = mongoose.model('Article');
+import articleTemplate from '../templates/articleTemplate';
 
 //getAll
 router.get('/', (req, res, next) => {
@@ -29,8 +30,8 @@ router.get('/:id', (req, res, next) => {
 
 //updateOne
 router.put('/:id', (req, res, next) => {
-  Article.findByIdAndUpdate(req.params.id, {$set: req.body}, {upsert: false})
-  .then((err, article) => {
+  Article.findByIdAndUpdate(req.params.id, {$set: req.body}, {upsert: false, new: true})
+  .then((article, err) => {
     console.log("updated article", article);
     res.json(article);
   }, (err) => {
@@ -38,6 +39,19 @@ router.put('/:id', (req, res, next) => {
   });
 });
 
+//addArticle
+router.post('/', (req, res, next) => {
+  let newArticle = _.merge(articleTemplate, req.body);
+  // console.log('merge result of new article', newArticle)
+
+  Article.create(newArticle)
+  .then((article, err) => {
+    console.log("created article", article);
+    // res.redirect(301, '/api/articles/' + article._id);
+  }, (err) => {
+    next(err)
+  });
+});
 
 // deleteOne
 router.delete('/:id', (req, res, next) => {
@@ -53,8 +67,6 @@ router.put('/:id/media', (req, res, next) => {
   
   Article.findById(req.params.id)
   .then(article => {
-    // article.media.addToSet(mediaInfo);
-    console.log('found article', article)
       article.media.push(mediaInfo);
     
     article.save(err => {
@@ -64,10 +76,8 @@ router.put('/:id/media', (req, res, next) => {
       } else {
         res.json(article);
       }
-      
     });
   });
-
 });
 // getByCategory
 //
