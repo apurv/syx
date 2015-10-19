@@ -7,7 +7,7 @@ import AppDispatcher from '../dispatcher/dispatcher';
 import ArticleStore from '../stores/article.store';
 import marked from 'marked';
 import HeadersPanel from './HeadersPanel';
-require('bootstrap/dist/css/bootstrap.min.css');
+require("../public/scss/viewpanel");
 
 
 export default class Viewer extends Component {
@@ -26,6 +26,7 @@ export default class Viewer extends Component {
 
   componentDidMount() {
     this.state.listeners.articleStore = ArticleStore.addListener(this._onChange.bind(this));
+		require("../public/js/viewpanel-scroll")(window, 'add');
   }
 
   componentWillUnmount() {
@@ -85,19 +86,19 @@ export default class Viewer extends Component {
 
 		 return (
 			 <div className="row">
-				 <div id="syx-viewpanel" class="syx-view-intro syx-intro-container" style={{ marginTop: '50px' }}>
+				 <div id="syx-viewpanel" className="syx-view-intro syx-intro-container" style={{ marginTop: '50px' }}>
 
-		 			<header class="header">
-		 				<div class="bg-img"><img src="http://i.imgur.com/67EjwuD.jpg" alt="Background Image" /></div>
-		 				<div class="title">
+		 			<header className="header">
+		 				<div className="bg-img"><img src="http://i.imgur.com/67EjwuD.jpg" alt="Background Image" /></div>
+		 				<div className="title">
 		 					<h1>Supernova Remnants</h1>
-		 					<p class="subline">Inspiration for Article Intro Effects</p>
+		 					<p className="subline">Inspiration for Article Intro Effects</p>
 		 					<p>by <strong>Apurv Parikh</strong> &#8212; Posted in <strong>Web Fundamentals</strong> on <strong>October 18, 2015</strong></p>
 		 				</div>
 		 			</header>
 
 
-		 			<article class="content">
+		 			<article className="content">
 							{ /* HEADERS PANEL */}
 							<HeadersPanel article={this.state.article} />
 
@@ -131,4 +132,4 @@ export default class Viewer extends Component {
 }
 
 
-// 		 			<button class="trigger" data-info="Click to see the header effect"><span>Trigger</span></button>
+// 		 			<button className="trigger" data-info="Click to see the header effect"><span>Trigger</span></button>
