@@ -22,6 +22,7 @@ export default class ToolPanel extends Component {
 			article: {},
 			listenerTokens: {},
 		};
+		// TODO -- POTENTIAL REFACTOR INTO READ FILE IN THE FUTURE - 
 		// FOR SOME REASON WE HAVE TO GET ARTICLE THROUGH PROPS AND ARTICLE STORE
 		// IN ORDER FOR IT TO BE DEFINED ON STATE X-FER AND PAGE RELOAD
 		this.state.article = this.props.article;
