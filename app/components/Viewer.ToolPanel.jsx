@@ -22,16 +22,18 @@ export default class ToolPanel extends Component {
 			article: {},
 			listenerTokens: {},
 		};
-
+		// TODO -- POTENTIAL REFACTOR INTO READ FILE IN THE FUTURE - 
+		// FOR SOME REASON WE HAVE TO GET ARTICLE THROUGH PROPS AND ARTICLE STORE
+		// IN ORDER FOR IT TO BE DEFINED ON STATE X-FER AND PAGE RELOAD
 		this.state.article = this.props.article;
 	}
-	// TODO -- PASSED ARTICLE THROUGH PROPS INSTEAD
-	// componentWillMount() {
-	// 	this.state.listenerTokens.articleStoreToken = ArticleStore.addListener(()=>{
-	// 		let currentArtice = ArticleStore.getStoreArticle();
-	// 		this.state.article = currentArtice;
-	// 	});
-	// }
+
+	componentWillMount() {
+		this.state.listenerTokens.articleStoreToken = ArticleStore.addListener(()=>{
+			let currentArticle = ArticleStore.getStoreArticle();
+			this.state.article = currentArticle;
+		});
+	}
 
 	componentDidMount() {
 		let mountedComponent = this;
@@ -47,7 +49,7 @@ export default class ToolPanel extends Component {
 		function setMediaInfoInMemory(file, done) {
 			let modName = encodeName(file.name);
 			let modFolder = encodeName(mountedComponent.state.article.title);
-
+			
 			addedFileData.push({
 				name: file.name,
 				urlEncodedName: modName,
@@ -95,7 +97,10 @@ export default class ToolPanel extends Component {
 		//Wait for thumbnail event because the File.width property is a DropzoneJS extension
 		// and is not a part of the core File API; it is added later.
 		//http://stackoverflow.com/questions/25927381/undefined-returned-when-accessing-some-listed-properties-of-file-object
-		
+			
+
+			Dropzone.options.dropzoneForm = false;
+			
 			let dropzoneOptions = {
 				acceptedFiles: 'image/*',
 				url: computeAmazonURL,
@@ -107,8 +112,11 @@ export default class ToolPanel extends Component {
 					this.on('thumbnail', saveMediaInfoToSyx);
 				},
 			};
-
+			let dropElem = document.getElementById('dropzone-form');
+			
 			let myDropzone = new Dropzone("form#dropzone-form", dropzoneOptions);
+			
+			
 		
 	}
 
