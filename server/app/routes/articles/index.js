@@ -23,7 +23,7 @@ router.get('/', (req, res, next) => {
 
 // getOne
 router.get('/:id', (req, res, next) => {
-  Article.findById(req.params.id).then((article) => {
+  Article.findById(req.params.id).populate('author').then((article) => {
     console.log("GET one article", article);
     res.json(article);
   });

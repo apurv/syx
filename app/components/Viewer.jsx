@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import LeftSidebar from './LeftSidebar';
 import ArticleActions from '../actions/article.actions';
 import articleStore from '../stores/article.store';
 import AppDispatcher from '../dispatcher/dispatcher';
 import ArticleStore from '../stores/article.store';
 import marked from 'marked';
+require('bootstrap/dist/css/bootstrap.min.css');
 
 
 export default class Viewer extends Component {
@@ -31,7 +31,7 @@ export default class Viewer extends Component {
 		Object.keys(this.state.listeners).forEach( token => {
 			this.state.listeners[token].remove();
 		}.bind(this));
-  }
+	}
 
   _onChange() {
     this.setState({ article: ArticleStore.getStoreArticle() });
@@ -71,7 +71,6 @@ export default class Viewer extends Component {
   }
 
 	render() {
-		console.log("%c VIEWER render invoked ", 'background: #222; color: #bada55')
     let viewStyle = {};
     let editStyle = {};
 		let value = this.state.article.content;
@@ -82,13 +81,32 @@ export default class Viewer extends Component {
       editStyle.display = 'none';
     }
 
-		return (
 
+		 return (
+			 <div className="row">
+				 <div id="syx-viewpanel" class="syx-view-intro">
+		 			<header class="header">
+		 				<div class="bg-img"><img src="./1.jpg" alt="Background Image" /></div>
+		 				<div class="title">
+		 					<h1>Supernova Remnants</h1>
+		 					<p class="subline">Inspiration for Article Intro Effects</p>
+		 					<p>by <strong>Apurv Parikh</strong> &#8212; Posted in <strong>Web Fundamentals</strong> on <strong>October 18, 2015</strong></p>
+		 				</div>
+		 			</header>
+		 			<button class="trigger" data-info="Click to see the header effect"><span>Trigger</span></button>
+		 			<article class="content">
+
+		 			</article>
+		 		</div>
+			</div>
+		);
 			<div className="container" style={{ marginTop: '50px' }}>
 				<div className="row">
 					<LeftSidebar article={this.state.article} />
-
-					<div className="col-md-8 syx-viewpanel" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
+artis<div className="col-md-2">
+						<h3>Side-Bar</h3>
+					</div>
+					<div className="col-md-8" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
 						<h1>Article</h1>
 						<div dangerouslySetInnerHTML={this.markdownify()}></div>
 					</div>
@@ -108,6 +126,7 @@ export default class Viewer extends Component {
 					<div className="col-md-2">
 						<h3>Control Panel</h3>
 					</div>
+
 				</div>
 			</div>
 		);

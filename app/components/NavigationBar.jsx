@@ -45,7 +45,7 @@ export default class NavigationBar extends Component {
 		}
 
 		return (
-			<Navbar className="navbar navbar-inverse navbar-fixed-top" inverse toggleNavKey={0}>
+			<Navbar className="navbar navbar-default navbar-fixed-top" toggleNavKey={0}>
 		    <NavBrand>
 					<a className="navbar-brand" href="#">syx</a>
 				</NavBrand>

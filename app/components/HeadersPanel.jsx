@@ -6,7 +6,7 @@ import ArticleStore from '../stores/article.store';
 import marked from 'marked';
 
 
-export default class LeftSidebar extends Component {
+export default class HeadersPanel extends Component {
 
 	constructor(props){
 		super(props);
