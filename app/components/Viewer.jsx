@@ -94,7 +94,7 @@ export default class Viewer extends Component {
 					<LeftSidebar article={this.state.article} />
 
 					<div className="col-md-7" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
-						<h1>Article</h1>
+						<h1>{this.state.article.title}</h1>
 						<div dangerouslySetInnerHTML={this.markdownify()}></div>
 					</div>
 
@@ -111,7 +111,7 @@ export default class Viewer extends Component {
 					</div>
 
 					<div className="col-md-3">
-						<ToolPanel />
+						<ToolPanel article={this.state.article}/>
 					</div>
 				</div>
 			</div>

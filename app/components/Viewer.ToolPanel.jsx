@@ -1,35 +1,42 @@
 import React, {Component} from "react";
 
+import Dropzone from 'dropzone';
+window.Dropzone = Dropzone;
+
+require('dropzone/dist/min/dropzone.min.css');
+
 import ArticleActions from '../actions/article.actions';
 import ArticleStore from '../stores/article.store';
 import AppDispatcher from '../dispatcher/dispatcher';
 import AppConstants from '../constants';
-import Dropzone from 'dropzone';
-import axios from 'axios';
-// import AWS from 'aws-sdk'
 
-require('dropzone/dist/min/dropzone.min.css');
+import axios from 'axios';
+
 let s3 = new AWS.S3();
 
-export default class ToolPanel extends Component {
+export default class ToolPanel extends Component {	
 
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
 		
 		this.state = {
 			article: {},
 			listenerTokens: {},
 		};
+
+		this.state.article = this.props.article;
 	}
 
-	componentWillMount() {
-		this.state.listenerTokens.articleStoreToken = ArticleStore.addListener(()=>{
-			this.state.article = ArticleStore.getStoreArticle();
-		});
-	}
+	// componentWillMount() {
+	// 	console.log('hit componentWillMount')
+	// 	this.state.listenerTokens.articleStoreToken = ArticleStore.addListener(()=>{
+	// 		let currentArtice = ArticleStore.getStoreArticle();
+	// 		console.log('componentWillMountl currentArticle', currentArticle)
+	// 		this.state.article = currentArtice;
+	// 	});
+	// }
 
 	componentDidMount() {
-
 		let mountedComponent = this;
 		let addedFileData = [];
 
@@ -41,16 +48,17 @@ export default class ToolPanel extends Component {
 
 		//store uri safe info
 		function setMediaInfoInMemory(file, done) {
+			console.log('file in setmedia', file);
 			let modName = encodeName(file.name);
+			console.log('encoded file name', 'article: ', mountedComponent.state.article);
+
 			let modFolder = encodeName(mountedComponent.state.article.title);
 
 			addedFileData.push({
 				name: file.name,
 				urlEncodedName: modName,
 				amazonFolder: modFolder,
-				type: file.type,
-				height: file.height,
-				width: file.width
+				fileType: file.type
 			});
 
 			done();
@@ -65,11 +73,11 @@ export default class ToolPanel extends Component {
 			let localhost = 'http://127.0.0.1:3000/syx/article-media/';
 
 			let fullAmazonUrl = `${localhost}${fileInfo.amazonFolder}/${fileInfo.urlEncodedName}`;
-			fileInfo.s3URL = fullAmazonUrl;
+			fileInfo.s3Url = fullAmazonUrl;
 			return fullAmazonUrl;
 		}
 
-		function computeSyxURL() {
+		function computeSyxUrl() {
 			let baseUrl = `api/articles/`;
 			let articleId = mountedComponent.state.article._id;
 			return `${baseUrl}${articleId}/media`;
@@ -77,12 +85,10 @@ export default class ToolPanel extends Component {
 
 		function saveMediaInfoToSyx(file) {
 			let fileInfo = addedFileData[addedFileData.length - 1];
-			fileInfo.width = file.width;
 			fileInfo.height = file.height;
+			fileInfo.width = file.width;
 
-			console.log('in saveMediaInfoToSyx', fileInfo);
-			
-			axios.put(computeSyxURL(), fileInfo)
+			axios.put(computeSyxUrl(), fileInfo)
 			.then(res => {
 				console.log('Successfully uploaded to our server. Res: ', res);
 			})
@@ -95,22 +101,26 @@ export default class ToolPanel extends Component {
 		//Wait for thumbnail event because the File.width property is a DropzoneJS extension
 		// and is not a part of the core File API; it is added later.
 		//http://stackoverflow.com/questions/25927381/undefined-returned-when-accessing-some-listed-properties-of-file-object
-		Dropzone.options.dropzoneForm = {
-			acceptedFiles: 'image/*',
-			url: computeAmazonURL,
-			method: 'post',
-			dictDefaultMessage: `Drop files here.`,
-			dictFileTooBig: `File too big!`,
-			accept: setMediaInfoInMemory,
-			init: function() {
-				this.on('thumbnail', saveMediaInfoToSyx);
-			},
-		};
+		
+			let dropzoneOptions = {
+				acceptedFiles: 'image/*',
+				url: computeAmazonURL,
+				method: 'post',
+				dictDefaultMessage: `Drop files here.`,
+				dictFileTooBig: `File too big!`,
+				accept: setMediaInfoInMemory,
+				init: function() {
+					this.on('thumbnail', saveMediaInfoToSyx);
+				},
+			};
+
+			let myDropzone = new Dropzone("form#dropzone-form", dropzoneOptions);
+		
 	}
 
 	componentWillUnmount() {
 		let tokens = Object.keys(this.state.listenerTokens);
-		tokens.forEach(t => t.remove());
+		tokens.forEach(t => this.state.listenerTokens[t].remove());
 	}
 	
 	render() {

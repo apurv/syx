@@ -14,7 +14,11 @@ let schema = new mongoose.Schema({
   media: [{
   	name: String,
   	height: Number,
-  	width: Number
+  	width: Number,
+    fileType: String,
+    urlEncodedName: String,
+    amazonFolder: String,
+    s3Url: String
   }]
 });
 
