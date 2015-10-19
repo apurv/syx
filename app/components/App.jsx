@@ -1,20 +1,20 @@
-import React, {Component} from "react";
-import Navbar from "./Navbar.jsx";
-import Splash from "./Splash.jsx";
-import Card from "./Card.jsx";
+import React, {Component} from 'react';
+import { Router, Route, Link } from 'react-router';
+
 require('bootstrap/dist/css/bootstrap.min.css');
+
+import articleStore from '../stores/article.store';
+import AppDispatcher from '../dispatcher/dispatcher';
+import NavigationBar from './NavigationBar.jsx';
 
 export default class App extends Component {
 	render() {
 		return (
 			<div>
-		    <Navbar />
-				<Splash />
-				<div className="row">
-					<Card />
-					<Card />
-					<Card />
-				</div>
+				<div className="container">
+			    	<NavigationBar />
+			  </div>
+				{this.props.children}
 			</div>
 		)
 	}
