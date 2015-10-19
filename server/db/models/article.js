@@ -11,7 +11,11 @@ let schema = new mongoose.Schema({
   share: {},
   comments: [{}],
   revision: [{}],
-  media: [{}]
+  media: [{
+  	name: String,
+  	height: Number,
+  	width: Number
+  }]
 });
 
 mongoose.model('Article', schema);
