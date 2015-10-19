@@ -40,8 +40,25 @@ export default class Viewer extends Component {
   }
 
 	markdownify() {
+
 		if (this.state.article.content) {
-			return {__html: marked(this.state.article.content)};
+
+			let renderer = new marked.Renderer();
+
+			let droppables = _.compact(_.map(marked.lexer(this.state.article.content), item => {
+				if (item.type === 'code' && item.lang === 'syx-droppable') {
+					renderer.code = function (code, lang, escaped) {
+						if (lang === item.lang) {
+							return '<div class="droppable text-center" style="background: deepskyblue;"> DROPPABLE DIV </div>';
+						} else {
+							return '<pre><code>' + code + '</code></pre>';
+						}
+					}
+					return item;
+				}
+			}));
+
+			return {__html: marked(this.state.article.content, { renderer: renderer })};
 		} else {
 			return {__html: ''};
 		}
@@ -59,7 +76,6 @@ export default class Viewer extends Component {
 			this.setState({ editing: false });
 			ArticleActions.updateArticle(this.state.article._id, this.state.article)
 			.then(() => {
-				// console.log(".then invoked", ArticleStore.getStoreArticle())
 				this._onChange();
 			}.bind(this));
 	}
