@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 
 import Dropzone from 'dropzone';
-window.Dropzone = Dropzone;
 
 require('dropzone/dist/min/dropzone.min.css');
 
@@ -26,12 +25,10 @@ export default class ToolPanel extends Component {
 
 		this.state.article = this.props.article;
 	}
-
+	// TODO -- PASSED ARTICLE THROUGH PROPS INSTEAD
 	// componentWillMount() {
-	// 	console.log('hit componentWillMount')
 	// 	this.state.listenerTokens.articleStoreToken = ArticleStore.addListener(()=>{
 	// 		let currentArtice = ArticleStore.getStoreArticle();
-	// 		console.log('componentWillMountl currentArticle', currentArticle)
 	// 		this.state.article = currentArtice;
 	// 	});
 	// }
@@ -48,10 +45,7 @@ export default class ToolPanel extends Component {
 
 		//store uri safe info
 		function setMediaInfoInMemory(file, done) {
-			console.log('file in setmedia', file);
 			let modName = encodeName(file.name);
-			console.log('encoded file name', 'article: ', mountedComponent.state.article);
-
 			let modFolder = encodeName(mountedComponent.state.article.title);
 
 			addedFileData.push({
