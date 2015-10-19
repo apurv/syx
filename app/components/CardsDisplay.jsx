@@ -6,6 +6,7 @@ import AppConstants from '../constants';
 import Card from './Card.jsx';
 
 export default class CardsDisplay extends Component {
+
     constructor() {
         super();
 
@@ -27,10 +28,6 @@ export default class CardsDisplay extends Component {
         this.state = {
             articles: ArticleActions.getAllArticles()
         };
-    }
-
-    processClick() {
-        console.log('hi from Card Component', this.state)
     }
 
     addArticle() {
@@ -66,8 +63,11 @@ export default class CardsDisplay extends Component {
                     )
                 })
                 }
-                <button className="btn btn-success btn-lg" style={{ margin:'50px', display: this.isAdmin() }}
-                        onClick={this.addArticle.bind(this)}> Contribute
+                <button 
+                    className="btn btn-success btn-lg" 
+                    style={{ margin:'50px', display: this.isAdmin() }}
+                    onClick={this.addArticle.bind(this)}> 
+                        Contribute
                 </button>
             </div>
         )

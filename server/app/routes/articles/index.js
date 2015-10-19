@@ -24,7 +24,6 @@ router.get('/', (req, res, next) => {
 // getOne
 router.get('/:id', (req, res, next) => {
   Article.findById(req.params.id).then((article) => {
-    console.log("GET one article", article);
     res.json(article);
   });
 });
@@ -62,7 +61,24 @@ router.delete('/:id', (req, res, next) => {
   });
 });
 
+router.put('/:id/media', (req, res, next) => {
 
+  let mediaInfo = req.body;
+  
+  Article.findById(req.params.id)
+  .then(article => {
+      article.media.push(mediaInfo);
+    
+    article.save(err => {
+      if (err) {
+        console.log('Error saving media. Error: ', err);
+        return next(err); 
+      } else {
+        res.json(article);
+      }
+    });
+  });
+});
 // getByCategory
 //
 // updateOne

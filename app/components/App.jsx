@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import NavigationBar from './NavigationBar.jsx';
+import { Router, Route, Link } from 'react-router';
 
 require('bootstrap/dist/css/bootstrap.min.css');
-import { Router, Route, Link } from 'react-router';
 
 import articleStore from '../stores/article.store';
 import AppDispatcher from '../dispatcher/dispatcher';
-
+import NavigationBar from './NavigationBar.jsx';
 
 export default class App extends Component {
 	render() {
