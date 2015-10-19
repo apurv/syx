@@ -44,7 +44,7 @@ export default class HeadersPanel extends Component {
 
 	render() {
 		return (
-					<div className="col-md-2">
+					<div className="col-md-2" style={{backgroundColor: 'green'}}>
 						<h3>Side-Bar</h3>
 							{ this.state.headers.map(function (header, index) {
 									return (

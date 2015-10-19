@@ -91,14 +91,15 @@ export default class Viewer extends Component {
 		 			<header className="header">
 		 				<div className="bg-img"><img src="http://i.imgur.com/67EjwuD.jpg" alt="Background Image" /></div>
 		 				<div className="title">
-		 					<h1>Supernova Remnants</h1>
-		 					<p className="subline">Inspiration for Article Intro Effects</p>
+		 					<h1>Intro to Angular2</h1>
+							<h3>Lorem markdownum parenti ut matris.</h3>
 		 					<p>by <strong>Apurv Parikh</strong> &#8212; Posted in <strong>Web Fundamentals</strong> on <strong>October 18, 2015</strong></p>
 		 				</div>
 		 			</header>
 
 
 		 			<article className="content">
+						<div className="row" style={{ minWidth: '100%' }}>
 							{ /* HEADERS PANEL */}
 							<HeadersPanel article={this.state.article} />
 
@@ -121,9 +122,10 @@ export default class Viewer extends Component {
 							</div>
 
 							{ /* TOOLS PANEL */}
-							<div className="col-md-2">
+							<div className="col-md-2" style={{ backgroundColor: 'deeppink' }}>
 								<h3>Control Panel</h3>
 							</div>
+						</div>
 		 			</article>
 		 		</div>
 			</div>
@@ -131,5 +133,5 @@ export default class Viewer extends Component {
 	}//end render
 }
 
-
+// <p className="subline">Lorem markdownum parenti ut matris.</p>
 // 		 			<button className="trigger" data-info="Click to see the header effect"><span>Trigger</span></button>
