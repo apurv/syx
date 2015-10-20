@@ -29,6 +29,10 @@ export default class Viewer extends Component {
 		};
 	}
 
+	// componentWillMount() {
+		
+	// }
+
   componentDidMount() {
     this.state.listeners.articleStore = ArticleStore.addListener(this._onChange.bind(this));
 
@@ -83,21 +87,22 @@ export default class Viewer extends Component {
 	  this.classList.remove('over');  // this / e.target is previous target element.
 	}
     */
-    
 
-    let draggableDivs = document.querySelectorAll('#draggable-media .draggable-media-elem');
+    // We are waiting for dom to be compiled, otherwise this could go in render
+    setTimeout(()=>{
+    	let draggableDivs = document.querySelectorAll('#draggable-media .draggable-media-elem');
 
-    [].forEach.call(draggableDivs, function(div) {
-    	div.addEventListener('dragstart', handleDragStart, false);
-    });
+    	[].forEach.call(draggableDivs, function(div) {
+    		div.addEventListener('dragstart', handleDragStart, false);
+    	});
 
-    let droppableDivs = document.querySelectorAll('.droppable-media-elem');
+    	let droppableDivs = document.querySelectorAll('.droppable-media-elem');
 
-    [].forEach.call(droppableDivs, function(div) {
-    	div.addEventListener('drop', handleDrop, false);
-    	div.addEventListener('dragover', handleDragOver, false);
-    });
-
+    	[].forEach.call(droppableDivs, function(div) {
+    		div.addEventListener('drop', handleDrop, false);
+    		div.addEventListener('dragover', handleDragOver, false);
+    	});
+    },0);
   }//end componentDidMount
 
 	componentWillUnmount() {

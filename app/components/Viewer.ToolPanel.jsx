@@ -1,15 +1,12 @@
 import React, {Component} from "react";
-
 import Dropzone from 'dropzone';
-
-require('dropzone/dist/min/dropzone.min.css');
 
 import ArticleActions from '../actions/article.actions';
 import ArticleStore from '../stores/article.store';
 import AppDispatcher from '../dispatcher/dispatcher';
 import AppConstants from '../constants';
 
-import axios from 'axios';
+require('dropzone/dist/min/dropzone.min.css');
 
 let s3 = new AWS.S3();
 
@@ -36,9 +33,9 @@ export default class ToolPanel extends Component {
 		this.setState({ article: ArticleStore.getStoreArticle() });
 	}
 
-	componentWillMount() {
+	// componentWillMount() {
 		
-	}
+	// }
 
 	componentDidMount() {
 
@@ -81,38 +78,19 @@ export default class ToolPanel extends Component {
 			return fullAmazonUrl;
 		}
 
-		function computeSyxUrl() {
-			let baseUrl = `api/articles/`;
-			let articleId = mountedComponent.state.article._id;
-			return `${baseUrl}${articleId}/media`;
-		}
-
 		function saveMediaInfoToSyx(file) {
-			console.log('in saveMediaInfoToSyx');
 			let fileInfo = addedFileData[addedFileData.length - 1];
+
 			fileInfo.height = file.height;
 			fileInfo.width = file.width;
 
 			ArticleActions.updateArticleMedia(mountedComponent.state.article._id, fileInfo);
-			// axios.put(computeSyxUrl(), fileInfo)
-			// .then(res => {
-			// 	console.log('Successfully uploaded to our server. Res: ', res);
-			// 	console.log('mountedComponent: ', mountedComponent);
-			// })
-			// .catch(res =>{
-			// 	console.log('Error uploading to Syx server. Error: ', res);
-			// 	throw new Error(res)
-			// });
 		}
 
-		function consoleLog(args) {
-			console.log('arguments: ', arguments)
-		}
 		//Wait for thumbnail event because the File.width property is a DropzoneJS extension
 		// and is not a part of the core File API; it is added later.
 		//http://stackoverflow.com/questions/25927381/undefined-returned-when-accessing-some-listed-properties-of-file-object
 			
-
 		Dropzone.options.dropzoneForm = false;
 		
 		let dropzoneOptions = {
@@ -124,9 +102,9 @@ export default class ToolPanel extends Component {
 			accept: setMediaInfoInMemory,
 			init: function() {
 				this.on('thumbnail', saveMediaInfoToSyx);
-				// this.on('sending', consoleLog)
 			},
 		};
+
 		let dropElem = document.getElementById('dropzone-form');
 		
 		let myDropzone = new Dropzone("form#dropzone-form", dropzoneOptions);
@@ -153,7 +131,7 @@ export default class ToolPanel extends Component {
 					</div>
 
 					<div id="draggable-media">
-						{this.state.article.media.map((media, index) => {
+						{articleMedia.map((media, index) => {
 							return (	
 								<div className="draggable-media-elem" key={index} draggable="true">
 									<span>
@@ -170,10 +148,4 @@ export default class ToolPanel extends Component {
 			</div>
 		);
 	}
-	/*					<div>
-						{this.state.article.media.map((media, index) => {
-							return <p key={index}>{media.name}</p>
-						})}
-					</div>
-	*/
 }
