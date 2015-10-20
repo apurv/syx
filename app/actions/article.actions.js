@@ -9,7 +9,8 @@ let ArticleActions = {
 	getAllArticles,
 	getArticle,
 	updateArticle,
-	deleteArticle
+	deleteArticle,
+	updateArticleMedia,
 };
 
 function addArticle(authorId) {
@@ -69,6 +70,17 @@ function getArticle(id) {
 function updateArticle(id, article) {
 	console.log("id", id);
 	return request.put('/api/articles/' + id, article).then(response => {
+		AppDispatcher.handleServerAction({
+			actionType: AppConstants.SET_CURRENT_ARTICLE,
+			payload: response.data
+		});
+  }).catch(function (err) {
+    console.log("err", err);
+  });
+}
+
+function updateArticleMedia(id, fileToAdd) {
+	return request.put('/api/articles/' + id + '/media', fileToAdd).then(response => {
 		AppDispatcher.handleServerAction({
 			actionType: AppConstants.SET_CURRENT_ARTICLE,
 			payload: response.data

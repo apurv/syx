@@ -13,14 +13,14 @@ export default class CardsDisplay extends Component {
         this.state = {
             articles: []
         };
-
-        let initalListener = ArticleStore.addListener((e) => {
-            console.log("inside handler", e)
+        //FIXME -- this seems bad
+        let initialListener = ArticleStore.addListener((e) => {
+            // console.log("inside handler", e)
             this.setState({
                 articles: ArticleStore.getAllStoreArticles()
             });
 
-            initalListener.remove();
+            initialListener.remove();
         });
     }
 

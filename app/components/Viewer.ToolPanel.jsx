@@ -93,15 +93,16 @@ export default class ToolPanel extends Component {
 			fileInfo.height = file.height;
 			fileInfo.width = file.width;
 
-			axios.put(computeSyxUrl(), fileInfo)
-			.then(res => {
-				console.log('Successfully uploaded to our server. Res: ', res);
-				console.log('mountedComponent: ', mountedComponent);
-			})
-			.catch(res =>{
-				console.log('Error uploading to Syx server. Error: ', res);
-				throw new Error(res)
-			});
+			ArticleActions.updateArticleMedia(mountedComponent.state.article._id, fileInfo);
+			// axios.put(computeSyxUrl(), fileInfo)
+			// .then(res => {
+			// 	console.log('Successfully uploaded to our server. Res: ', res);
+			// 	console.log('mountedComponent: ', mountedComponent);
+			// })
+			// .catch(res =>{
+			// 	console.log('Error uploading to Syx server. Error: ', res);
+			// 	throw new Error(res)
+			// });
 		}
 
 		function consoleLog(args) {
@@ -123,7 +124,7 @@ export default class ToolPanel extends Component {
 			accept: setMediaInfoInMemory,
 			init: function() {
 				this.on('thumbnail', saveMediaInfoToSyx);
-				this.on('sending', consoleLog)
+				// this.on('sending', consoleLog)
 			},
 		};
 		let dropElem = document.getElementById('dropzone-form');
