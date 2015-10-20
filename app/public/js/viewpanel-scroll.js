@@ -1,83 +1,37 @@
 import classie from 'classie';
 module.exports = viewpanelScroll;
 
-function viewpanelScroll(window, add) {
+function viewpanelScroll(add) {
 
-  // detect if IE : from http://stackoverflow.com/a/16657946
-  var ie = (function() {
-    console.log("%c IE INVOKED", "background: #1c1c1c; color: limegreen", '');
-    var undef, rv = -1; // Return value assumes failure.
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf('MSIE ');
-    var trident = ua.indexOf('Trident/');
+  var docElem = window.document.documentElement,
+      scrollVal,
+      isRevealed,
+      noscroll,
+      isAnimating,
+      container = document.getElementById('syx-viewpanel');
 
-    if (msie > 0) {
-      // IE 10 or older => return version number
-      rv = parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-    } else if (trident > 0) {
-      // IE 11 (or newer) => return version number
-      var rvNum = ua.indexOf('rv:');
-      rv = parseInt(ua.substring(rvNum + 3, ua.indexOf('.', rvNum)), 10);
-    }
+  console.log("container", container);
 
-    return ((rv > -1) ? rv : undef);
-  }());
-
-
-  // disable/enable scroll (mousewheel and keys) from http://stackoverflow.com/a/4770179
-  // left: 37, up: 38, right: 39, down: 40,
-  // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-  var keys = [32, 37, 38, 39, 40],
-    wheelIter = 0;
-
-  function preventDefault(e) {
-
-    console.log("%c preventDefault invoked", "background: #1c1c1c; color: deeppink", '');
-    e = e || window.event;
-    if (e.preventDefault)
-      e.preventDefault();
-    e.returnValue = false;
+  if (container && add) {
+    console.log("%c ADDED LISTENER", "background: #1c1c1c; color: deeppink");
+    window.scrollTo(0, 0);
+    document.onscroll = scrollPage;
+  } else {
+    console.log("%c REMOVED LISTENER", "background: #1c1c1c; color: deeppink");
+    document.onscroll = null;
   }
 
-  function keydown(e) {
-    console.log("%c keydown invoked", "background: #1c1c1c; color: deeppink", '');
-    for (var i = keys.length; i--;) {
-      if (e.keyCode === keys[i]) {
-        preventDefault(e);
-        return;
-      }
-    }
-  }
 
-  function touchmove(e) {
-    console.log("%c touchmove invoked", "background: #1c1c1c; color: deeppink", '');
-    preventDefault(e);
-  }
-
-  function wheel(e) {
-    // for IE
-    //if( ie ) {
-    //preventDefault(e);
-    //}
-  }
 
   function disable_scroll() {
-    window.onmousewheel = document.onmousewheel = wheel;
-    document.onkeydown = keydown;
-    document.body.ontouchmove = touchmove;
+    console.log("%c disable_scroll invoked", "background: #1c1c1c; color: deepskyblue");
+    window.onmousewheel = document.onmousewheel = null;
   }
 
   function enable_scroll() {
+    console.log("%c enable_scroll invoked", "background: #1c1c1c; color: deeppink");
     window.onmousewheel = document.onmousewheel = document.onkeydown = document.body.ontouchmove = null;
   }
-
-  var docElem = window.document.documentElement,
-    scrollVal,
-    isRevealed,
-    noscroll,
-    isAnimating,
-    container = document.getElementById('syx-viewpanel'),
-    trigger = container.querySelector('button.trigger');
 
   function scrollY() {
     console.log("%c scrollY invoked", "background: #1c1c1c; color: deepskyblue", window.pageYOffset, docElem.scrollTop);
@@ -85,10 +39,10 @@ function viewpanelScroll(window, add) {
   }
 
   function scrollPage() {
-    console.log("%c scrollPage invoked", "background: #1c1c1c; color: limegreen", noscroll);
+    console.log("%c scrollPage invoked", "background: #1c1c1c; color: white");
     scrollVal = scrollY();
 
-    if (noscroll && !ie) {
+    if (noscroll) {
       if (scrollVal < 0) return false;
       // keep it that way
       window.scrollTo(0, 0);
@@ -111,7 +65,7 @@ function viewpanelScroll(window, add) {
   }
 
   function toggle(reveal) {
-    console.log("%c toggle invoked", "background: #1c1c1c; color: limegreen", '');
+    console.log("%c toggle invoked", "background: #1c1c1c; color: yellow", '');
     isAnimating = true;
 
     if (reveal) {
@@ -140,20 +94,9 @@ function viewpanelScroll(window, add) {
   disable_scroll();
 
   if (pageScroll) {
+    console.log("%c pageScroll IF CONDITION invoked", "background: #1c1c1c; color: yellow");
     isRevealed = true;
     classie.add(container, 'notrans');
     classie.add(container, 'modify');
   }
-
-  if (add === 'add') {
-    window.addEventListener('scroll', scrollPage);
-    // trigger.addEventListener('click', function() {
-    //   toggle('reveal');
-    // });
-  } else {
-    console.log("removed listener");
-    window.removeEventListener('scroll', scrollPage);
-  }
-
-
 };

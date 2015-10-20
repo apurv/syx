@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import ArticleActions from '../actions/article.actions';
 import ArticleStore from '../stores/article.store';
 import marked from 'marked';
+import TweenMax from 'gsap';
 
 
 export default class HeadersPanel extends Component {
@@ -20,6 +21,12 @@ export default class HeadersPanel extends Component {
 		if (!(this.props.article instanceof Promise)) {
 			this.setHeaders(this.props.article);
 		}
+	}
+
+	componentDidMount() {
+		let node = ReactDOM.findDOMNode(this);
+		// console.log("node", node);
+		// TweenMax.to(node, 3, { x: 100 })
 	}
 
   componentWillReceiveProps() {
@@ -45,10 +52,9 @@ export default class HeadersPanel extends Component {
 	render() {
 		return (
 					<div className="col-md-2" style={{backgroundColor: 'green'}}>
-						<h3>Side-Bar</h3>
 							{ this.state.headers.map(function (header, index) {
 									return (
-											<h4 key={index}>{header.text}</h4>
+											<div className="syx-sidebar-header" key={index}>{header.text}</div>
 									)
 								})
 							}

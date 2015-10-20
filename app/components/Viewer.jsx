@@ -26,13 +26,14 @@ export default class Viewer extends Component {
 
   componentDidMount() {
     this.state.listeners.articleStore = ArticleStore.addListener(this._onChange.bind(this));
-		require("../public/js/viewpanel-scroll")(window, 'add');
+		require("../public/js/viewpanel-scroll")(window);
   }
 
   componentWillUnmount() {
 		Object.keys(this.state.listeners).forEach( token => {
 			this.state.listeners[token].remove();
 		}.bind(this));
+		require("../public/js/viewpanel-scroll")();
 	}
 
   _onChange() {
