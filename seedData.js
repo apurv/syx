@@ -83,30 +83,40 @@ let seedArticles = (users) => {
     let articles = [
         {
           title: 'Intro to ReactJS',
+          subtitle: 'Lorem markdownum parenti ut matris.',
+          category: 'React Fundamentals',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['react', 'es6', 'webpack']
         },
         {
           title: 'Intro to Angular2',
+          subtitle: 'Lorem markdownum parenti ut matris.',
+          category: 'Advanced Angular',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['angular', 'es6', 'angular2']
         },
         {
           title: 'AngularJS Fundamentals',
+          subtitle: 'Lorem markdownum parenti ut matris.',
+          category: 'Angular Fundamentals',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['angular', 'es6', 'webpack']
         },
         {
           title: 'Advanced Directives in AngularJS',
+          subtitle: 'Lorem markdownum parenti ut matris.',
+          category: 'Advanced Angular',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['angular', 'es6', 'directives']
         },
         {
           title: 'AngularJS Authentication',
+          subtitle: 'Lorem markdownum parenti ut matris.',
+          category: 'OAuth',
           author: users[randomize(users)]._id,
           content: markdown_text,
           tags: ['react', 'es6', 'webpack']

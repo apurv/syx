@@ -1,18 +1,17 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import marked from 'marked';
-
-import Splash from './Splash.jsx';
-import Card from './Card.jsx';
-import ToolPanel from './Viewer.ToolPanel.jsx';
-import LeftSidebar from './LeftSidebar.jsx';
+import Splash from './Splash';
+import Card from './Card';
+import ToolPanel from './Viewer.ToolPanel';
 import ArticleActions from '../actions/article.actions';
 import articleStore from '../stores/article.store';
 import AppDispatcher from '../dispatcher/dispatcher';
 import ArticleStore from '../stores/article.store';
+import marked from 'marked';
+import HeadersPanel from './HeadersPanel';
+require("../public/scss/viewpanel");
 
-require('bootstrap/dist/css/bootstrap.min.css');
 
 
 export default class Viewer extends Component {
@@ -34,6 +33,7 @@ export default class Viewer extends Component {
 	// }
 
   componentDidMount() {
+  	require("../public/js/viewpanel-scroll")(window);
     this.state.listeners.articleStore = ArticleStore.addListener(this._onChange.bind(this));
 
     let dragSrc = null;
@@ -42,7 +42,6 @@ export default class Viewer extends Component {
     	dragSrc = this;
     	e.dataTransfer.effectAllowed = 'move';
     	e.dataTransfer.setData('text/html', this.innerHTML);
-
     }
 
     function handleDrop(e) {
@@ -109,6 +108,8 @@ export default class Viewer extends Component {
 		Object.keys(this.state.listeners).forEach( token => {
 			this.state.listeners[token].remove();
 		}.bind(this));
+
+		require("../public/js/viewpanel-scroll")();
 	}
 
 	_onChange() {
@@ -116,8 +117,25 @@ export default class Viewer extends Component {
 	}
 
 	markdownify() {
+
 		if (this.state.article.content) {
-			return {__html: marked(this.state.article.content)};
+
+			let renderer = new marked.Renderer();
+
+			let droppables = _.compact(_.map(marked.lexer(this.state.article.content), item => {
+				if (item.type === 'code' && item.lang === 'syx-droppable') {
+					renderer.code = function (code, lang, escaped) {
+						if (lang === item.lang) {
+							return '<div class="droppable-media-elem text-center" style="background: deepskyblue;"> DROPPABLE DIV </div>';
+						} else {
+							return '<pre><code>' + code + '</code></pre>';
+						}
+					}
+					return item;
+				}
+			}));
+
+			return {__html: marked(this.state.article.content, { renderer: renderer })};
 		} else {
 			return {__html: ''};
 		}
@@ -149,6 +167,7 @@ export default class Viewer extends Component {
   	}
 
 	render() {
+
 	    let viewStyle = {};
 	    let editStyle = {};
 		let value = this.state.article.content;
@@ -160,31 +179,49 @@ export default class Viewer extends Component {
 	    }
 
 		return (
-			<div className="container" style={{ marginTop: '50px' }}>
-				<div className="row">
-					<LeftSidebar article={this.state.article} />
-					<div className="droppable-media-elem" style={{ backgroundColor: "teal" }} droppable>Drop Here</div>
-					<div className="col-md-7" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
-						<h1>{this.state.article.title}</h1>
-						<div dangerouslySetInnerHTML={this.markdownify()}></div>
-					</div>
+			<div id="syx-view-row" className="row">
+				<div id="syx-viewpanel" className="syx-view-intro syx-intro-container" style={{ marginTop: '50px' }}>
 
-					<div className="col-md-7" style={viewStyle}>
-						<h1>Article</h1>
-						<textarea type="text"
-							className="form-control"
-							ref="articleTextArea"
-							style={{height: '90vh'}}
-							value={value}
-							onChange={this.handleChange.bind(this)}
-							onBlur={this.handleEditingDone.bind(this)}>
-						</textarea>
-					</div>
+		 			<header className="header">
+		 				<div className="bg-img"><img src="http://i.imgur.com/67EjwuD.jpg" alt="Background Image" /></div>
+		 				<div className="title">
+		 					<h1>{this.state.article.title}</h1>
+							<h3>Lorem markdownum parenti ut matris.</h3>
+		 					<p>by <strong>Apurv Parikh</strong> &#8212; Posted in <strong>Web Fundamentals</strong> on <strong>October 18, 2015</strong></p>
+		 				</div>
+		 			</header>
 
-					<div className="col-md-3">
-						<ToolPanel article={this.state.article}/>
-					</div>
-				</div>
+
+		 			<article className="content">
+						<div className="row" style={{ minWidth: '100%' }}>
+							{ /* HEADERS PANEL */}
+							<HeadersPanel article={this.state.article} />
+
+							{ /* ARTICLE PANEL */}
+							<div className="col-md-7" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>
+								<h1>Article</h1>
+								<div dangerouslySetInnerHTML={this.markdownify()}></div>
+							</div>
+
+							<div className="col-md-7" style={viewStyle}>
+								<h1>Article</h1>
+								<textarea type="text"
+									className="form-control"
+									ref="articleTextArea"
+									style={{height: '90vh'}}
+									value={value}
+									onChange={this.handleChange.bind(this)}
+									onBlur={this.handleEditingDone.bind(this)}>
+								</textarea>
+							</div>
+
+							{ /* TOOLS PANEL */}
+							<div className="col-md-3">
+								<ToolPanel article={this.state.article}/>
+							</div>
+						</div>
+		 			</article>
+		 		</div>
 			</div>
 		);
 	}//end render

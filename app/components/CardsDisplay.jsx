@@ -3,7 +3,7 @@ import ArticleActions from '../actions/article.actions';
 import ArticleStore from '../stores/article.store';
 import UserStore from '../stores/user.store';
 import AppConstants from '../constants';
-import Card from './Card.jsx';
+import Card from './Card';
 
 export default class CardsDisplay extends Component {
 

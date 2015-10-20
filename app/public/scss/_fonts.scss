@@ -1,0 +1,28 @@
+/*
+ * _fonts.scss
+ */
+
+$font_dir: '../fonts/';
+
+@function _simple-font-url($name, $extension) {
+    @return url($font_dir + $name + '.' + $extension);
+}
+
+@function _full-font-url($name, $extension, $format, $hash: '') {
+    @return url($font_dir + $name + '/' + $name + '.' + $extension + $hash) format($format);
+}
+
+@mixin register-font($name) {
+    @font-face {
+        font-family: $name;
+        font-style: normal;
+        font-weight: normal;
+        src: _full-font-url($name, 'ttf', 'truetype');
+	}
+}
+
+@mixin use-registered-font($name) {
+    font-family: $name, 'Helvetica Neue';
+    font-weight: normal;
+    letter-spacing: 0;
+}
