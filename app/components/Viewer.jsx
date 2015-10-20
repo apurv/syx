@@ -102,7 +102,7 @@ export default class Viewer extends Component {
 
 
 		 return (
-			 <div className="row">
+			 <div id="syx-view-row" className="row">
 				 <div id="syx-viewpanel" className="syx-view-intro syx-intro-container" style={{ marginTop: '50px' }}>
 
 		 			<header className="header">

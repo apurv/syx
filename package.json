@@ -84,6 +84,7 @@
     "react-bootstrap": "^0.27.1",
     "react-dom": "^0.14.0-beta3",
     "react-router": "1.0.0-rc3",
+    "scrollmagic": "^2.0.5",
     "serve-favicon": "^2.3.0",
     "socket.io-client": "^1.3.5",
     "url-loader": "^0.5.6"

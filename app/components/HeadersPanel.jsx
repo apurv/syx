@@ -5,7 +5,8 @@ import ArticleActions from '../actions/article.actions';
 import ArticleStore from '../stores/article.store';
 import marked from 'marked';
 import TweenMax from 'gsap';
-
+import ScrollMagic from 'ScrollMagic';
+require('../../node_modules/scrollmagic/scrollmagic/minified/plugins/animation.gsap.min');
 
 export default class HeadersPanel extends Component {
 
@@ -24,9 +25,11 @@ export default class HeadersPanel extends Component {
 	}
 
 	componentDidMount() {
-		let node = ReactDOM.findDOMNode(this);
-		// console.log("node", node);
-		// TweenMax.to(node, 3, { x: 100 })
+		let smController = new ScrollMagic.Controller();
+		let tween = TweenMax.to(ReactDOM.findDOMNode(this), 2.5, { x: 300 });
+		var scene = new ScrollMagic.Scene({ triggerElement: "#syx-sidebar" })
+								.setTween(tween)
+								.addTo(smController);
 	}
 
   componentWillReceiveProps() {
@@ -50,15 +53,30 @@ export default class HeadersPanel extends Component {
 
 
 	render() {
+		let spaceRegEx = /\s/gmi;
 		return (
-					<div className="col-md-2" style={{backgroundColor: 'green'}}>
-							{ this.state.headers.map(function (header, index) {
-									return (
-											<div className="syx-sidebar-header" key={index}>{header.text}</div>
-									)
-								})
-							}
+					<div id="syx-sidebar" className="col-md-2">
+						<nav className="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix">
+							<ul className="nav bs-docs-sidenav">
+								<li className="active">
+									{ this.state.headers.map(function (header, index) {
+											return (
+													<a className="syx-sidebar-header"
+														href={'#'+(header.text.replace(spaceRegEx, "-"))}
+														key={index}>{header.text}
+													</a>
+											)
+										})
+									}
+								</li>
+							</ul>
+							<a className="back-to-top" href="#top">
+								Back to top
+							</a>
+						</nav>
 					</div>
 		);
 	}//end render
 }
+
+// <div className="syx-sidebar-header" key={index}>{header.text}</div>

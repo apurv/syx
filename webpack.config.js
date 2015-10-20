@@ -32,7 +32,17 @@ module.exports = {
 	},
 	resolve: {
 		modulesDirectories: ['node_modules', 'web_modules', 'bower_components'],
-		extensions: ['', '.js', '.jsx', '.json', '.scss', '.sass', '.less']
+		extensions: ['', '.js', '.jsx', '.json', '.scss', '.sass', '.less'],
+		alias: {
+            "npm": 'node_modules',
+            "TweenLite": __dirname + '/node_modules/gsap/src/uncompressed/TweenLite.js',
+            "TweenMax": __dirname + '/node_modules/gsap/src/uncompressed/TweenMax.js',
+            "TimelineLite": __dirname + '/node_modules/gsap/src/uncompressed/TimelineLite.js',
+            "TimelineMax": __dirname + '/node_modules/gsap/src/uncompressed/TimelineMax.js',
+            "scrollmagic": __dirname + '/node_modules/scrollmagic/scrollmagic/uncompressed/ScrollMagic.js',
+            "animation.gsap": __dirname + '/node_modules/scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js',
+            "debug.addIndicators": __dirname + '/node_modules/scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js'
+    }
 	},
 	devtool: "source-map",
 	plugins: [
