@@ -6,11 +6,10 @@ import { IndexRoute } from 'react-router'
 // import io from "socket.io-client";
 // const socket = io("http://localhost:7070/");
 
-import "./main-style.css";
-import Viewer from './components/Viewer.jsx';
-import Splash from './components/Splash.jsx';
-import Card from './components/Card.jsx';
-import App from "./components/App.jsx";
+import Viewer from './components/Viewer';
+import Splash from './components/Splash';
+import Card from './components/Card';
+import App from "./components/App";
 
 //Without react-router
 // render(<App />, document.getElementById("container"));
