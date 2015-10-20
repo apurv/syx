@@ -19,23 +19,31 @@ export default class ToolPanel extends Component {
 		super(props)
 		
 		this.state = {
-			article: {},
+			article: {
+				media: []
+			},
 			listenerTokens: {},
 		};
 		// TODO -- POTENTIAL REFACTOR INTO READ FILE IN THE FUTURE - 
 		// FOR SOME REASON WE HAVE TO GET ARTICLE THROUGH PROPS AND ARTICLE STORE
 		// IN ORDER FOR IT TO BE DEFINED ON STATE X-FER AND PAGE RELOAD
-		this.state.article = this.props.article;
+		if (!(typeof this.props.article.then === 'function')) {
+			this.state.article = this.props.article;
+		}
+	}
+
+	_onChange() {
+		this.setState({ article: ArticleStore.getStoreArticle() });
 	}
 
 	componentWillMount() {
-		this.state.listenerTokens.articleStoreToken = ArticleStore.addListener(()=>{
-			let currentArticle = ArticleStore.getStoreArticle();
-			this.state.article = currentArticle;
-		});
+		
 	}
 
 	componentDidMount() {
+
+		this.state.listenerTokens.articleStoreToken = ArticleStore.addListener(this._onChange.bind(this));
+
 		let mountedComponent = this;
 		let addedFileData = [];
 
@@ -80,6 +88,7 @@ export default class ToolPanel extends Component {
 		}
 
 		function saveMediaInfoToSyx(file) {
+			console.log('in saveMediaInfoToSyx');
 			let fileInfo = addedFileData[addedFileData.length - 1];
 			fileInfo.height = file.height;
 			fileInfo.width = file.width;
@@ -87,6 +96,7 @@ export default class ToolPanel extends Component {
 			axios.put(computeSyxUrl(), fileInfo)
 			.then(res => {
 				console.log('Successfully uploaded to our server. Res: ', res);
+				console.log('mountedComponent: ', mountedComponent);
 			})
 			.catch(res =>{
 				console.log('Error uploading to Syx server. Error: ', res);
@@ -94,30 +104,31 @@ export default class ToolPanel extends Component {
 			});
 		}
 
+		function consoleLog(args) {
+			console.log('arguments: ', arguments)
+		}
 		//Wait for thumbnail event because the File.width property is a DropzoneJS extension
 		// and is not a part of the core File API; it is added later.
 		//http://stackoverflow.com/questions/25927381/undefined-returned-when-accessing-some-listed-properties-of-file-object
 			
 
-			Dropzone.options.dropzoneForm = false;
-			
-			let dropzoneOptions = {
-				acceptedFiles: 'image/*',
-				url: computeAmazonURL,
-				method: 'post',
-				dictDefaultMessage: `Drop files here.`,
-				dictFileTooBig: `File too big!`,
-				accept: setMediaInfoInMemory,
-				init: function() {
-					this.on('thumbnail', saveMediaInfoToSyx);
-				},
-			};
-			let dropElem = document.getElementById('dropzone-form');
-			
-			let myDropzone = new Dropzone("form#dropzone-form", dropzoneOptions);
-			
-			
+		Dropzone.options.dropzoneForm = false;
 		
+		let dropzoneOptions = {
+			acceptedFiles: 'image/*',
+			url: computeAmazonURL,
+			method: 'post',
+			dictDefaultMessage: `Drop files here.`,
+			dictFileTooBig: `File too big!`,
+			accept: setMediaInfoInMemory,
+			init: function() {
+				this.on('thumbnail', saveMediaInfoToSyx);
+				this.on('sending', consoleLog)
+			},
+		};
+		let dropElem = document.getElementById('dropzone-form');
+		
+		let myDropzone = new Dropzone("form#dropzone-form", dropzoneOptions);
 	}
 
 	componentWillUnmount() {
@@ -126,6 +137,8 @@ export default class ToolPanel extends Component {
 	}
 	
 	render() {
+		let articleMedia = this.state.article.media;
+
 		return (
 			<div>
 				<div className="col-md-12">
@@ -137,8 +150,29 @@ export default class ToolPanel extends Component {
 						id="dropzone-form">
 					</form>
 					</div>
+
+					<div id="draggable-media">
+						{this.state.article.media.map((media, index) => {
+							return (	
+								<div className="draggable-media-elem" key={index} draggable="true">
+									<span>
+										<img src="/images/image_default.svg" data-s3url={media.s3Url}/>
+										<span>
+											{media.name}
+										</span>
+									</span>
+								</div>
+							)
+						})}
+					</div>
 				</div>
 			</div>
 		);
 	}
+	/*					<div>
+						{this.state.article.media.map((media, index) => {
+							return <p key={index}>{media.name}</p>
+						})}
+					</div>
+	*/
 }

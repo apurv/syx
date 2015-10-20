@@ -4,3 +4,4 @@ npm-debug.log
 .idea
 public
 /server/env/development.js
+.DS_Store
