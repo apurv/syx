@@ -113,15 +113,17 @@ export default class Viewer extends Component {
 		 				<div className="title">
 		 					<h1>Intro to Angular2</h1>
 							<h3>Lorem markdownum parenti ut matris.</h3>
-		 					<p>by <strong>Apurv Parikh</strong> &#8212; Posted in <strong>Web Fundamentals</strong> on <strong>October 18, 2015</strong></p>
+		 					<p id="syx-article-info">by <strong>Apurv Parikh</strong> &#8212; Posted in <strong>Web Fundamentals</strong> on <strong>October 18, 2015</strong></p>
 		 				</div>
 		 			</header>
+
+					<HeadersPanel article={this.state.article} />
 
 
 		 			<article className="content">
 						<div className="row" style={{ minWidth: '100%' }}>
 							{ /* HEADERS PANEL */}
-							<HeadersPanel article={this.state.article} />
+							<div className="col-md-2"></div>
 
 							{ /* ARTICLE PANEL */}
 							<div className="col-md-8" onDoubleClick={this.handleEditing.bind(this)} style={editStyle}>

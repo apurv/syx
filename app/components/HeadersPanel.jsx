@@ -27,7 +27,7 @@ export default class HeadersPanel extends Component {
 	componentDidMount() {
 		let smController = new ScrollMagic.Controller();
 		let tween = TweenMax.to(ReactDOM.findDOMNode(this), 2.5, { x: 300 });
-		var scene = new ScrollMagic.Scene({ triggerElement: "#syx-sidebar" })
+		var scene = new ScrollMagic.Scene({ triggerElement: "#syx-article-info" })
 								.setTween(tween)
 								.addTo(smController);
 	}
@@ -55,7 +55,6 @@ export default class HeadersPanel extends Component {
 	render() {
 		let spaceRegEx = /\s/gmi;
 		return (
-					<div id="syx-sidebar" className="col-md-2">
 						<nav className="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix">
 							<ul className="nav bs-docs-sidenav">
 								<li className="active">
@@ -74,7 +73,6 @@ export default class HeadersPanel extends Component {
 								Back to top
 							</a>
 						</nav>
-					</div>
 		);
 	}//end render
 }
