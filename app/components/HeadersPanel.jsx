@@ -29,9 +29,18 @@ export default class HeadersPanel extends Component {
 	componentDidMount() {
 		let smController = new ScrollMagic.Controller();
 		let tween = TweenMax.fromTo(ReactDOM.findDOMNode(this), 1.5, { x: -300 }, { x: 0 });
-		var scene = new ScrollMagic.Scene({ triggerElement: "#syx-article-info" })
+		let scene = new ScrollMagic.Scene({ triggerElement: "#syx-article-info" })
 								.setTween(tween)
 								.addTo(smController);
+
+		$('body').scrollspy({
+		    target: '.bs-docs-sidebar',
+		    offset: 40
+		});
+
+		$(".bs-docs-sidebar").affix({
+		    offset: { top: -1 }
+		});
 	}
 
   componentWillReceiveProps() {
@@ -55,16 +64,6 @@ export default class HeadersPanel extends Component {
 
 	render() {
 		let spaceRegEx = /\s/gmi;
-
-		$('body').scrollspy({
-		    target: '.bs-docs-sidebar',
-		    offset: 40
-		});
-
-		$(".bs-docs-sidebar").affix({
-		    offset: { top: -1 }
-		});
-
 
 		return (
 						<nav className="bs-docs-sidebar hidden-xs hidden-sm">
