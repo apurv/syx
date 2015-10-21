@@ -3,10 +3,6 @@ import CardsDisplay from './CardsDisplay';
 
 export default class Splash extends Component {
 
-  componentDidMount() {
-    // require("../public/js/viewpanel-scroll")(window);
-  }
-
     render() {
         return (
             <div>

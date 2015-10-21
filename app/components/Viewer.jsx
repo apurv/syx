@@ -94,9 +94,12 @@ export default class Viewer extends Component {
   }
 
 	render() {
+
+
+
     let viewStyle = {};
     let editStyle = {};
-	let value = this.state.article.content;
+		let value = this.state.article.content;
 
     if (!this.state.editing) {
       viewStyle.display = 'none';
@@ -118,7 +121,6 @@ export default class Viewer extends Component {
 		 			</header>
 
 					<HeadersPanel article={this.state.article} />
-
 
 		 			<article className="content">
 						<div className="row" style={{ minWidth: '100%' }}>
