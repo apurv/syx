@@ -6,6 +6,8 @@ import ArticleStore from '../stores/article.store';
 import marked from 'marked';
 import TweenMax from 'gsap';
 import ScrollMagic from 'ScrollMagic';
+window.jQuery = window.$ =  require('jquery/dist/jquery.min');
+require('bootstrap/dist/js/bootstrap.min');
 require('../../node_modules/scrollmagic/scrollmagic/minified/plugins/animation.gsap.min');
 
 export default class HeadersPanel extends Component {
@@ -26,10 +28,19 @@ export default class HeadersPanel extends Component {
 
 	componentDidMount() {
 		let smController = new ScrollMagic.Controller();
-		let tween = TweenMax.to(ReactDOM.findDOMNode(this), 2.5, { x: 300 });
-		var scene = new ScrollMagic.Scene({ triggerElement: "#syx-sidebar" })
+		let tween = TweenMax.fromTo(ReactDOM.findDOMNode(this), 1.5, { x: -300 }, { x: 0 });
+		let scene = new ScrollMagic.Scene({ triggerElement: "#syx-article-info" })
 								.setTween(tween)
 								.addTo(smController);
+
+		$('body').scrollspy({
+		    target: '.bs-docs-sidebar',
+		    offset: 40
+		});
+
+		$(".bs-docs-sidebar").affix({
+		    offset: { top: -1 }
+		});
 	}
 
   componentWillReceiveProps() {
@@ -51,32 +62,34 @@ export default class HeadersPanel extends Component {
 		this.setState({ headers: headers });
   }
 
-
 	render() {
 		let spaceRegEx = /\s/gmi;
+
 		return (
-					<div id="syx-sidebar" className="col-md-2">
-						<nav className="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix">
-							<ul className="nav bs-docs-sidenav">
-								<li className="active">
+						<nav className="bs-docs-sidebar hidden-xs hidden-sm">
+							<ul id="syx-sidebar" className="nav nav-stacked">
 									{ this.state.headers.map(function (header, index) {
 											return (
-													<a className="syx-sidebar-header"
-														href={'#'+(header.text.replace(spaceRegEx, "-"))}
+												<li key={'li_' + index}>
+													<a
+														href={'#' + (header.text.replace(spaceRegEx, "-")).toLowerCase()}
 														key={index}>{header.text}
 													</a>
+												</li>
 											)
 										})
 									}
-								</li>
 							</ul>
-							<a className="back-to-top" href="#top">
-								Back to top
-							</a>
 						</nav>
-					</div>
 		);
 	}//end render
 }
+// <a className="back-to-top" href="#top">
+// 	Back to top
+// </a>
+
+//
+// <nav className="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" style={{ backgroundColor: 'grey' }}>
+// 	<ul id="syx-sidebar" className="nav bs-docs-sidenav">
 
 // <div className="syx-sidebar-header" key={index}>{header.text}</div>
