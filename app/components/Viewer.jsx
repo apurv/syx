@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import Splash from './Splash';
@@ -10,8 +10,8 @@ import AppDispatcher from '../dispatcher/dispatcher';
 import ArticleStore from '../stores/article.store';
 import marked from 'marked';
 import HeadersPanel from './HeadersPanel';
+import hljs from 'highlight.js';
 require("../public/scss/viewpanel");
-
 
 
 export default class Viewer extends Component {
@@ -27,6 +27,7 @@ export default class Viewer extends Component {
 			}
 		};
 	}
+
 
   componentDidMount() {
     this.state.listeners.articleStore = ArticleStore.addListener(this._onChange.bind(this));
@@ -52,18 +53,44 @@ export default class Viewer extends Component {
 
 			let droppables = _.compact(_.map(marked.lexer(this.state.article.content), item => {
 				if (item.type === 'code' && item.lang === 'syx-droppable') {
-					renderer.code = function (code, lang, escaped) {
+					renderer.code = (code, lang, escaped) => {
 						if (lang === item.lang) {
 							return '<div class="droppable text-center" style="background: deepskyblue;"> DROPPABLE DIV </div>';
-						} else {
-							return '<pre><code>' + code + '</code></pre>';
 						}
+
+					  if (renderer.options.highlight) {
+					    let out = renderer.options.highlight(code, lang);
+					    if (out != null && out !== code) {
+					      escaped = true;
+					      code = out;
+					    }
+					  }
+
+					  if (!lang) {
+					    return '<pre><code class="hljs ">'
+					      + (escaped ? code : escape(code, true))
+					      + '\n</code></pre>';
+					  }
+
+					  return '<pre><code class="hljs '
+					    + renderer.options.langPrefix
+					    + escape(lang, true)
+					    + '">'
+					    + (escaped ? code : escape(code, true))
+					    + '\n</code></pre>\n';
 					}
 					return item;
 				}
 			}));
 
-			return {__html: marked(this.state.article.content, { renderer: renderer })};
+			marked.setOptions({
+				highlight: function (code) {
+					return hljs.highlightAuto(code).value;
+				},
+				renderer: renderer
+			});
+
+			return {__html: marked(this.state.article.content)};
 		} else {
 			return {__html: ''};
 		}
@@ -86,16 +113,15 @@ export default class Viewer extends Component {
 	}
 
 	handleChange(event) {
-		let tempVar = this.state.article;
-		tempVar.content = event.target.value;
+		let temp = this.state.article;
+		temp.content = event.target.value;
 		this.setState({
-			article: tempVar
+			article: temp
 		});
   }
 
+
 	render() {
-
-
 
     let viewStyle = {};
     let editStyle = {};

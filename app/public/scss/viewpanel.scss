@@ -1,8 +1,23 @@
 @import "./main";
+@import "~highlight.js/styles/monokai.css";
+@import "highlightjs/seti";
 
 /*
  * viewpanel
  */
+
+pre {
+    padding: inherit;
+    margin: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    word-break: inherit;
+    word-wrap: inherit;
+    background-color: inherit;
+    border: inherit;
+    border-radius: inherit;
+}
 
 #syx-viewpanel {
      @include use-registered-font('DIN');

@@ -1,0 +1,70 @@
+@import 'colors';
+
+html {
+	background-color: $code-background;
+}
+
+.hljs {
+	color: $code-font-color;
+}
+
+.hljs-comment {
+	color: $comment;
+}
+
+.hljs-keyword,
+.hljs-operator {
+	color: $keyword;
+}
+
+.hljs-number {
+	color: $numeric;
+}
+
+.hljs-literal {
+	color: $constant;
+}
+
+.hljs-title,
+.hljs-built_in {
+	color: $entity-function;
+}
+
+.hljs-storage {
+	color: $storage;
+}
+
+.hljs-params {
+	color: $function-param;
+}
+
+.hljs-function,
+.hljs-class {
+	.hljs-keyword {
+		color: $storage;
+	}
+}
+
+// HTML
+.hljs-attribute {
+	color: $element-attr;
+}
+
+.hljs-value {
+	color: $string;
+}
+
+// CSS
+.hljs-rule {
+	.hljs-attribute {
+		color: $purple;
+	}
+}
+
+.hljs-class {
+	color: $class;
+}
+
+.hljs-id {
+	color: $id;
+}
